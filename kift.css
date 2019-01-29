@@ -1,0 +1,9 @@
+#startButton      {
+    background-color: blue;
+    color: white;
+}
+
+#stopButton       {
+    background-color: red;
+    color: white;
+}
