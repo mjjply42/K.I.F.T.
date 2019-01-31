@@ -2,7 +2,6 @@ let preview = document.getElementById("preview");
 let recording = document.getElementById("recording");
 let startButton = document.getElementById("startButton");
 let stopButton = document.getElementById("stopButton");
-let downloadButton = document.getElementById("downloadButton");
 
 const constraints = {audio: true, video: false};
 
@@ -41,8 +40,16 @@ startButton.addEventListener("click", function() {
     preview.srcObject = stream;
   }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
   .then (recordedChunks => {
-    let recordedBlob = new Blob(recordedChunks, { type: "audio/ogg" });
+    let recordedBlob = new Blob(recordedChunks, { type: "audio/wav" });
     recording.src = URL.createObjectURL(recordedBlob);
+    var a = document.createElement('a');
+    document.body.appendChild(a);
+    a.style = 'display:none';
+    var url = window.URL.createObjectURL(recordedBlob);
+    a.href = url;
+    a.download = 'test.wav';
+    a.click();
+    window.URL.revokeObjectURL(url);
   })
 }, false);
 stopButton.addEventListener("click", function() {
