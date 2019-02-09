@@ -7,27 +7,21 @@
     <br>
     <div class="left">
       <button id="startButton" class="button">
-        Start
+        Record
       </button>
-      <h2>Preview</h2>
+      <p2 class="prev">Listen</p2>
       <audio id="preview" autoplay muted></audio>
     </div>
     <div class="right">
-      <button id="stopButton" class="button">
-        Stop
-      </button>
-      <h2>Recording</h2>
       <audio id="recording" controls></audio>
     </div>
     <div class="bottom">
       <pre id="log"></pre>
     </div>
-        <button id="Load_text">Load ajax Test </button>
-        <div id="field"></div><br>
-        <button id="Del_text">Delete ajax Test</button><br><br>
-        <button id="speech">Speech Test</button>
         <button id="serv">Server Test</button>
+        <div class="scroll-box">
         <ul id="response"></ul>
+        </div>
     </form>
   </head>
   <body>
@@ -139,6 +133,11 @@ function loadText()
   #startButton      {
     background-color: blue;
     color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 10px;
+    margin-left: -50px;
 }
 
 li  {
@@ -148,6 +147,74 @@ li  {
     background-color: red;
     color: white;
 }
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: "lato", sans-serif;
+  color: #E8AFE1;
+  background: #ad1283; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #ad1283 0%, #8f45d8 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #ad1283 0%,#8f45d8 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #ad1283 0%,#8f45d8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ad1283', endColorstr='#8f45d8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.logo {
+  position: absolute;
+   top: 50%;
+   left: 50%;
+   width: 300px;
+   height: 300px;
+   margin-top: -250px;
+   margin-left: -170px;
+}
+.scroll-box {
+  height: 150px;
+  width: 40vw;
+  overflow-y: scroll;
+  box-shadow:
+  0 15px 30px 0 rgba(0,0,0,0.11),
+  0 15px 15px 0 rgba(0,0,0,0.08);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 60px;
+  margin-left: -290px;
+}
+
+.prev  {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 230px;
+  margin-left: -30px;
+}
+
+#recording  {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 270px;
+  margin-left: -150px;
+}
+
+#startButton {
+  width: 40rem;
+  padding: .5rem 1rem;
+  margin: 0 1rem 1rem;
+  background: #5fb3b3;
+  border: none;
+  border-radius: .5rem;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+  position: absolute;
+   top: 50%;
+   left: 50%;
+   margin-top: -30px;
+   margin-left: -325px;
+}
 </style>
+<img class="logo" src="logo1.png">
   </body>
 </html>
