@@ -32,7 +32,6 @@ func main() {
 		GoString := C.GoString(Cstring)
 		fmt.Fprintln(res, GoString)
 		//os.Remove("~/Download/require.wav")
-		GoString = ""
 
 	})
 	fmt.Println("Server Running...")
