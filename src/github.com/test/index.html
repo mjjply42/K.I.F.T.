@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Call Go</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#callGo").on('click', function() {
+					$.ajax({
+						url: "http://localhost:9000/callme",
+						method: "GET",
+						success: function(data) {
+                            $("#response").append('<div>'+ data + '</div>');
+							//$("#response").html(data);
+						},
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<button id="callGo" type="submit">Call Go Code</button>
+		<div id="response"></div>
+	</body>
+</html>
