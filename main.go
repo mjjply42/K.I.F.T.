@@ -29,8 +29,12 @@ func main() {
 	http.HandleFunc("/callme", func(res http.ResponseWriter, req *http.Request) {
 		Cstring := C.printNumber()
 		//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
+		// testSting := "What is the weather here?"
+
+
 		GoString := C.GoString(Cstring)
 		fmt.Fprintln(res, GoString)
+		fmt.Fprintln(res, "HALLLO")
 		//os.Remove("~/Download/require.wav")
 
 	})
