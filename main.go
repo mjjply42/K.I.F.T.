@@ -12,6 +12,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	com "./commands"
 )
 
 //var serverDirectory string
@@ -27,14 +28,27 @@ func main() {
 	flag.Parse()
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/callme", func(res http.ResponseWriter, req *http.Request) {
-		Cstring := C.printNumber()
+		// Cstring := C.printNumber()
 		//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-		// testSting := "What is the weather here?"
-
-
-		GoString := C.GoString(Cstring)
-		fmt.Fprintln(res, GoString)
-		fmt.Fprintln(res, "HALLLO")
+		testString := "Get me the weather"
+		var commands = []string{
+			"Get me the weather",
+			"Events near me",
+			"Send Email",
+		}
+		//if string is equal to command
+		for i := 0; i < 3; i++ {
+			if strings.Compare(testString, commands[i]) == 0 {
+				log.Println(commands[i])
+				if (i == 0) {
+					log.Println(com.GetWeather("fremont"))
+					fmt.Fprintln(res, com.GetWeather("fremont"))
+				}
+			}
+		}
+		// GoString := C.GoString(Cstring)
+		// fmt.Fprintln(res, GoString)
+		// fmt.Fprintln(res, "HALLLO")
 		//os.Remove("~/Download/require.wav")
 
 	})

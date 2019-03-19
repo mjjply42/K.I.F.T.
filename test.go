@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"strings"
 )
 
 
@@ -14,9 +15,8 @@ func main() {
 		"Send Email",
 	}
 	//if string is equal to command
-	i := 0
-	for i < 3 {
-		if Compare(Cstring, commands[i]) == 0 {
+	for i := 0; i < 3; i++ {
+		if strings.Compare(Cstring, commands[i]) == 0 {
 			log.Println(commands[i])
 		}
 	}
