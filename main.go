@@ -30,26 +30,35 @@ func main() {
 	http.HandleFunc("/callme", func(res http.ResponseWriter, req *http.Request) {
 		// Cstring := C.printNumber()
 		//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-		testString := "Get me the weather"
+		testString := "Get me the weaather"
 		var commands = []string{
 			"Get me the weather",
 			"Events near me",
 			"Send Email",
 		}
+		flag := 0
 		//if string is equal to command
 		for i := 0; i < 3; i++ {
 			if strings.Compare(testString, commands[i]) == 0 {
 				log.Println(commands[i])
+				flag = 1
 				if (i == 0) {
+					log.Println(com.GetWeather("fremont"))
+					fmt.Fprintln(res, com.GetWeather("fremont"))
+				} else if (i == 1) {
 					log.Println(com.GetEvents("fremont"))
 					fmt.Fprintln(res, com.GetEvents("fremont"))
 				}
 			}
 		}
+		if (flag == 0) {
+			log.Println("Command not found.")
+			fmt.Fprintln(res, "Command not found. Please Try Again.")
+		}
 		// GoString := C.GoString(Cstring)
 		// fmt.Fprintln(res, GoString)
 		// fmt.Fprintln(res, "HALLLO")
-		//os.Remove("~/Download/require.wav")
+		// os.Remove("~/Download/require.wav")
 
 	})
 	fmt.Println("Server Running...")
