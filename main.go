@@ -41,8 +41,8 @@ func main() {
 			if strings.Compare(testString, commands[i]) == 0 {
 				log.Println(commands[i])
 				if (i == 0) {
-					log.Println(com.GetWeather("fremont"))
-					fmt.Fprintln(res, com.GetWeather("fremont"))
+					log.Println(com.GetEvents("fremont"))
+					fmt.Fprintln(res, com.GetEvents("fremont"))
 				}
 			}
 		}
