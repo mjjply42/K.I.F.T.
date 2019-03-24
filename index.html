@@ -5,6 +5,14 @@
     <title>KIFT</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <br>
+    <div class="user-field">
+      <button id="login">User Info</button><br><br>
+      <form action="" method="POST" autocomplete="" class="user-form">
+      <input type="text" id="first" value="First(Optional)" name="first-value" style="display: none;">
+      <input type="text" id="last" value="Last(Optional)" name="last-value" style="display: none;"><br><br>
+      <button type="submit" id="submit" style="display: none;">Save</button>
+    </form>
+    </div>
     <div class="left">
       <button id="startButton" class="button">
         Record
@@ -29,11 +37,41 @@
     let recording = document.getElementById("recording");
     let startButton = document.getElementById("startButton");
     let stopButton = document.getElementById("stopButton");
-    
+    let loginButton = document.querySelector("#login");
+    let lastButton = document.querySelector("#last");
+    let firstButton = document.querySelector("#first");
+    let submit = document.querySelector("#submit");
     const constraints = {audio: true, video: false};
     
     let recordingTimeMS = 4000;
+
+    $(".user-form").submit(function(e) {
+    e.preventDefault();
+});
+
+    submit.onclick = function()
+    {
+      localStorage.setItem('first', firstButton.value);
+      localStorage.setItem('last', lastButton.value);
+      var name = localStorage.getItem('first') + localStorage.getItem('last');
+    }
     
+    loginButton.onclick = function()
+    {
+      if (lastButton.style.display == "none")
+      {
+        lastButton.style.display = "block";
+        firstButton.style.display = "block";
+        submit.style.display = "block";
+      }
+      else
+      {
+        lastButton.style.display = "none";
+        firstButton.style.display = "none";
+        submit.style.display = "none";
+      }
+    }
+
     function wait(delayInMS) {
       return new Promise(resolve => setTimeout(resolve, delayInMS));
     }
@@ -78,9 +116,6 @@
         a.click();
         window.URL.revokeObjectURL(url);
       })
-    }, false);
-    stopButton.addEventListener("click", function() {
-      stop(preview.srcObject);
     }, false);</script>
 <!-- <script>
   let load_text = document.getElementById("serv");
@@ -213,6 +248,34 @@ body {
    left: 50%;
    margin-top: -30px;
    margin-left: -325px;
+}
+
+.user-field   {
+  height: 100px;
+  width: 500px;
+  position: absolute;
+  left: 32%;
+}
+
+.user-field input {
+  width: 40%;
+  height: 2em;
+}
+
+#submit   {
+  width: 15%;
+  height: 20%;
+}
+#first  {
+  float: left;
+}
+#last   {
+  float: right;
+}
+
+#login    {
+  position: absolute;
+  left: 43%;
 }
 </style>
 <img class="logo" src="logo1.png">
