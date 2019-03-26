@@ -8,7 +8,6 @@
 //         char tempFile[100];     // name of tempfile.
 
 //         strcpy(tempFile,tempnam("/tmp","sendmail")); // generate temp file name.
-
 //         FILE *fp = fopen(tempFile,"w"); // open it for writing.
 //         fprintf(fp,"%s\n",body);        // write body to it.
 //         fclose(fp);             // close it.
@@ -27,4 +26,4 @@ int main() {
         mkstemp("/tmp", "sendmail");
 
         return 0;
-}
+}:
