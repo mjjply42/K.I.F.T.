@@ -30,13 +30,12 @@ func main() {
 	http.HandleFunc("/callme", func(res http.ResponseWriter, req *http.Request) {
 		// Cstring := C.printNumber()
 		//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-		testString := "Set timer"
+		testString := "Send Email"
 		var commands = []string{
 			"Get me the weather",
 			"Events near me",
 			"Send Email",
 			"Search dictionary for term",
-			"Set timer",
 		}
 		flag := 0
 		//if string is equal to command
@@ -50,25 +49,26 @@ func main() {
 				} else if (i == 1) {
 					log.Println(com.GetEvents("fremont"))
 					fmt.Fprintln(res, com.GetEvents("fremont"))
+				} else if (i == 2) {
+					message := "HELLO This is from kift"
+					who := "stsong42@gmail.com"
+					value := com.SendEmail(message, who)
+					log.Println(value)
+					fmt.Fprintln(res, value)
 				} else if (i == 3) {
 					log.Println(com.SearchTerm("potato"))
 					fmt.Fprintln(res, com.SearchTerm("potato"))
-				} else if (i == 4) {
-					fmt.Fprintln(res, "Timer starting now")
-					http.ListenAndServe(fmt.Sprintf("%s:%d", serverHost, serverPort), nil)
-					fmt.Fprintln(res, com.SetTimer(5))
 				}
 			}
 		}
 		if (flag == 0) {
 			log.Println("Command not found.")
 			fmt.Fprintln(res, "Command not found. Please Try Again.")
-		}
+		}	
 		// GoString := C.GoString(Cstring)
 		// fmt.Fprintln(res, GoString)
 		// fmt.Fprintln(res, "HALLLO")
 		// os.Remove("~/Download/require.wav")
-
 	})
 	fmt.Println("Server Running...")
 	http.ListenAndServe(fmt.Sprintf("%s:%d", serverHost, serverPort), nil)

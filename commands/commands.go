@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"strings"
 	"time"
+	"os/exec"
 )
 
 func SetTimer(seconds time.Duration) string{
@@ -162,4 +163,17 @@ func SearchTerm(term string) string{
 
 	var response = fmt.Sprintf("A %s is %s\n", term, m.Results[0].LexicalEntries[0].Entries[0].Senses[0].Definitions[0])
 	return response
+}
+
+func SendEmail(message string, who string) string{
+
+	username := "kiftkift42@gmail.com"
+	passwd := "shotgun."
+	
+	cmd := exec.Command("python", "./PyCommands/command_email.py", message, who, username, passwd)
+	err := cmd.Run()
+	if err != nil {
+		return fmt.Sprintf("Command finished with error: %v", err)
+	}
+	return fmt.Sprintf("Message Sent")
 }
