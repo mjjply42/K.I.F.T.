@@ -6,7 +6,7 @@
 /*   By: dromansk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 21:45:14 by dromansk          #+#    #+#             */
-/*   Updated: 2019/03/31 18:59:02 by dromansk         ###   ########.fr       */
+/*   Updated: 2019/03/31 21:23:04 by dromansk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,18 @@ cmd_ln_t	*psphinx_config(void)
 	return (config);
 }
 
+char const	*psphinx_string(char *path)
+{
+	char const		*utt;
+	cmd_ln_t *config = psphinx_config();
+	utt = pocketsphinx_string(path, config);
+	cmd_ln_free_r(config);
+	return (utt);
+}
+
 int			main(int ac, char **av)
 {
 	if (ac == 2)
-	{
-		cmd_ln_t *config = psphinx_config();
-		char *s = (char *)pocketsphinx_string(av[1], config);
-		printf("%s\n", s);
-		cmd_ln_free_r(config);
-	}
+		printf("%s", psphinx_string(av[1]));
 	return (0);
 }
