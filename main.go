@@ -90,7 +90,9 @@ func handler(res http.ResponseWriter, req *http.Request) {
 	path := req.URL.Path[1:]
 	log.Println(path)
 	data, err := ioutil.ReadFile(string(path))
-
+	userIP := req.RemoteAddr
+	log.Println(userIP);
+	
 	if err == nil {
 		var contentType string
 
