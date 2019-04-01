@@ -19,6 +19,8 @@ import (
 var serverPort int
 var serverHost string
 var tmpl = template.Must(template.New("tmpl").ParseFiles("index.html"))
+var history string
+var HistoryCounter int = 1
 
 func main() {
 
@@ -30,14 +32,19 @@ func main() {
 	http.HandleFunc("/callme", func(res http.ResponseWriter, req *http.Request) {
 		// Cstring := C.printNumber()
 		//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-		testString := "Send Email"
+		testString := "Check History"
 		var commands = []string{
 			"Get me the weather",
 			"Events near me",
 			"Send Email",
 			"Search dictionary for term",
+			"Check History",
 		}
 		flag := 0
+
+		//add string from user to a history buffer
+		history = history + fmt.Sprintf("%d. %s\n", HistoryCounter, testString)
+		HistoryCounter += 1
 		//if string is equal to command
 		for i := 0; i < len(commands); i++ {
 			if strings.Compare(testString, commands[i]) == 0 {
@@ -58,13 +65,18 @@ func main() {
 				} else if (i == 3) {
 					log.Println(com.SearchTerm("potato"))
 					fmt.Fprintln(res, com.SearchTerm("potato"))
+				} else if (i == 4) {
+					log.Println(history)
+					fmt.Fprintln(res, history)
 				}
 			}
 		}
 		if (flag == 0) {
 			log.Println("Command not found.")
 			fmt.Fprintln(res, "Command not found. Please Try Again.")
-		}	
+		} else {
+
+		}
 		// GoString := C.GoString(Cstring)
 		// fmt.Fprintln(res, GoString)
 		// fmt.Fprintln(res, "HALLLO")
