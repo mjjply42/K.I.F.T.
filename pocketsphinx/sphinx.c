@@ -6,14 +6,16 @@
 /*   By: dromansk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 21:45:14 by dromansk          #+#    #+#             */
-/*   Updated: 2019/03/31 21:23:04 by dromansk         ###   ########.fr       */
+/*   Updated: 2019/03/31 21:26:58 by dromansk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pocketsphinx.h>
 
 /*
-** idk what to return yet, using strings for test purposes
+** Main included so we can compile it and use it as an outside program.
+** However I have structured the code so you can just call psphinx_string
+** to get your desired output string from the function directly.
 */
 
 char const	*parse_input(ps_decoder_t *reading, FILE *file, int *score)
@@ -29,7 +31,7 @@ char const	*parse_input(ps_decoder_t *reading, FILE *file, int *score)
 		stream = ps_process_raw(reading, buf, sample, FALSE, FALSE);
 	}
 	ps_end_utt(reading);
-	return(ps_get_hyp(reading, score));
+	return (ps_get_hyp(reading, score));
 }
 
 char const	*pocketsphinx_string(char *path, cmd_ln_t *config)
@@ -52,9 +54,9 @@ cmd_ln_t	*psphinx_config(void)
 	cmd_ln_t		*config;
 
 	config = cmd_ln_init(NULL, ps_args(), TRUE,
-		        "-hmm", MODELDIR "/en-us/en-us",
-		        "-lm", MODELDIR "/en-us/en-us.lm.bin",
-	    		"-dict", MODELDIR "/en-us/cmudict-en-us.dict",
+				"-hmm", MODELDIR "/en-us/en-us",
+				"-lm", MODELDIR "/en-us/en-us.lm.bin",
+				"-dict", MODELDIR "/en-us/cmudict-en-us.dict",
 				"-logfn", "/dev/null", NULL);
 	return (config);
 }
@@ -62,7 +64,9 @@ cmd_ln_t	*psphinx_config(void)
 char const	*psphinx_string(char *path)
 {
 	char const		*utt;
-	cmd_ln_t *config = psphinx_config();
+	cmd_ln_t		*config;
+
+	config = psphinx_config();
 	utt = pocketsphinx_string(path, config);
 	cmd_ln_free_r(config);
 	return (utt);
