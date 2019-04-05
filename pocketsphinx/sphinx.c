@@ -6,7 +6,7 @@
 /*   By: dromansk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 21:45:14 by dromansk          #+#    #+#             */
-/*   Updated: 2019/03/31 21:26:58 by dromansk         ###   ########.fr       */
+/*   Updated: 2019/04/05 16:12:22 by dromansk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 ** Main included so we can compile it and use it as an outside program.
 ** However I have structured the code so you can just call psphinx_string
 ** to get your desired output string from the function directly.
+** 
+** The version of pocketsphinx you need to have installed to make this work
+** is all set up in the make file so you should be able to run 'make install'
+** to get the proper version. The flags necessary for compilation are all laid
+** out in the make file as well.
 */
 
 char const	*parse_input(ps_decoder_t *reading, FILE *file, int *score)
