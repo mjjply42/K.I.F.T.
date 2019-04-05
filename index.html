@@ -117,26 +117,7 @@
         window.URL.revokeObjectURL(url);
       })
     }, false);</script>
-<!-- <script>
-  let load_text = document.getElementById("serv");
 
-load_text.addEventListener("click", loadText);
-
-function loadText()
-{
-    let request = new XMLHttpRequest();
-    request.open("GET", "3000/test", true);
-    request.onload = function() 
-    {
-        if (this.status == 200)
-        {
-            console.log("Success");
-            document.getElementById("field").innerHTML = this.responseText;
-        }
-    }
-    request.send();
-}
-</script> -->
 <script>
   $(document).ready(function() {
     $("#serv").on('click', function() {
@@ -148,7 +129,9 @@ function loadText()
           var synth = window.speechSynthesis;
           var test = document.querySelector("#response").lastChild.innerHTML;
           var speech = new SpeechSynthesisUtterance(test);
-          console.log(speech);
+          //var parsed = stringParse(test)
+          //var speech = new SpeechSynthesisUtterance(parsed);
+          //console.log(speech);
           speech.lang = 'en-US';
     //let speak = document.querySelector("#speech");
 

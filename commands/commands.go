@@ -1,27 +1,27 @@
 package commands
 
 import (
-	"net/http"
-	"log"
-	"io/ioutil"
-	"fmt"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os/exec"
 	"strings"
 	"time"
-	"os/exec"
 )
 
-func SetTimer(seconds time.Duration) string{
+func SetTimer(seconds time.Duration) string {
 	time.Sleep(seconds * time.Second)
-	return ("Ring Ring");
+	return ("Ring Ring")
 }
 
-func GetWeather(city string) string{
+func GetWeather(city string) string {
 	Apikey := "a84567876c635d5929647ab1879c3122"
 	//define url for get request
 	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?q=%s&units=imperial&APPID=%s", city, Apikey)
-	fmt.Printf("Performed Get on %s\n", url )
-	//perform get request 
+	fmt.Printf("Performed Get on %s\n", url)
+	//perform get request
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatalln(err)
@@ -41,7 +41,7 @@ func GetWeather(city string) string{
 			TempMax  int     `json:"temp_max"`
 			TempMin  float64 `json:"temp_min"`
 		} `json:"main"`
-		Weather    []struct {
+		Weather []struct {
 			Description string `json:"description"`
 			Icon        string `json:"icon"`
 			ID          int    `json:"id"`
@@ -52,14 +52,13 @@ func GetWeather(city string) string{
 			Speed float64 `json:"speed"`
 		} `json:"wind"`
 	}
-	
+
 	var m WeatherData
 	err = json.Unmarshal(body, &m)
-	return fmt.Sprintf("The temperature in %s is %.2f degrees farenheit and it is %s.\n", city, m.Main.Temp, m.Weather[0].Description)
+	return fmt.Sprintf("Weather: The temperature in %s is %.2f degrees farenheit and it is %s.\n", city, m.Main.Temp, m.Weather[0].Description)
 }
 
-
-func GetEvents(city string) string{
+func GetEvents(city string) string {
 	//use api.eventful.com for this one
 	url := fmt.Sprintf("http://api.eventful.com/json/events/search?...&keywords=books&location=%s&date=Future&within=10&app_key=nDJFtjJmt4pt4WjP", city)
 	resp, err := http.Get(url)
@@ -73,16 +72,16 @@ func GetEvents(city string) string{
 	}
 
 	type EventInfo struct {
-		Events     struct {
+		Events struct {
 			Event []struct {
-				URL           string      `json:"url"`
+				URL string `json:"url"`
 			} `json:"event"`
 		} `json:"events"`
 	}
 	var m EventInfo
 	err = json.Unmarshal(body, &m)
 	// maybe go through a few of the events on the list and concatenate to the string
-	var response = "Here are 3 events nearby.\n"
+	var response = "Event: Here are 3 events nearby.\n"
 	var i = 0
 	for i < 3 {
 		response += m.Events.Event[i].URL + "\n"
@@ -91,12 +90,12 @@ func GetEvents(city string) string{
 	return response
 }
 
-func SearchTerm(term string) string{
+func SearchTerm(term string) string {
 	//Using oxford dictionary api
 	language := "en"
-	
+
 	client := &http.Client{}
-	
+
 	url := fmt.Sprintf("https://od-api.oxforddictionaries.com:443/api/v1/entries/%s/%s", language, strings.ToLower(term))
 	req, err := http.NewRequest("GET", url, nil)
 	req.Header.Set("app_id", "3667cdeb")
@@ -161,19 +160,19 @@ func SearchTerm(term string) string{
 	var m Definition
 	err = json.Unmarshal(body, &m)
 
-	var response = fmt.Sprintf("A %s is %s\n", term, m.Results[0].LexicalEntries[0].Entries[0].Senses[0].Definitions[0])
+	var response = fmt.Sprintf("Define: A %s is %s\n", term, m.Results[0].LexicalEntries[0].Entries[0].Senses[0].Definitions[0])
 	return response
 }
 
-func SendEmail(message string, who string) string{
+func SendEmail(message string, who string) string {
 
 	username := "kiftkift42@gmail.com"
 	passwd := "shotgun."
-	
+
 	cmd := exec.Command("python", "./PyCommands/command_email.py", message, who, username, passwd)
 	err := cmd.Run()
 	if err != nil {
 		return fmt.Sprintf("Command finished with error: %v", err)
 	}
-	return fmt.Sprintf("Message Sent")
+	return fmt.Sprintf("Mail: Message Sent")
 }

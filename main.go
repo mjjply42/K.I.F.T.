@@ -12,6 +12,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+
 	com "./commands"
 )
 
@@ -28,14 +29,17 @@ func main() {
 	flag.Parse()
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/callme", func(res http.ResponseWriter, req *http.Request) {
-		// Cstring := C.printNumber()
+		//Cstring := C.printNumber()
 		//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-		testString := "Send Email"
+		testString := "List Commands"
 		var commands = []string{
 			"Get me the weather",
 			"Events near me",
 			"Send Email",
 			"Search dictionary for term",
+			"Set Alarm",
+			"Play Song",
+			"List Commands",
 		}
 		flag := 0
 		//if string is equal to command
@@ -43,28 +47,35 @@ func main() {
 			if strings.Compare(testString, commands[i]) == 0 {
 				log.Println(commands[i])
 				flag = 1
-				if (i == 0) {
-					log.Println(com.GetWeather("fremont"))
-					fmt.Fprintln(res, com.GetWeather("fremont"))
-				} else if (i == 1) {
+				if i == 0 {
+					log.Println(com.GetWeather("Union City"))
+					fmt.Fprintln(res, com.GetWeather("Union City"))
+				} else if i == 1 {
 					log.Println(com.GetEvents("fremont"))
 					fmt.Fprintln(res, com.GetEvents("fremont"))
-				} else if (i == 2) {
+				} else if i == 2 {
 					message := "HELLO This is from kift"
-					who := "stsong42@gmail.com"
+					who := "lauracmalagon@gmail.com"
 					value := com.SendEmail(message, who)
 					log.Println(value)
 					fmt.Fprintln(res, value)
-				} else if (i == 3) {
-					log.Println(com.SearchTerm("potato"))
-					fmt.Fprintln(res, com.SearchTerm("potato"))
+				} else if i == 3 {
+					log.Println(com.SearchTerm("word"))
+					fmt.Fprintln(res, com.SearchTerm("word"))
+				} else if i == 6 {
+					log.Println((commands))
+					i := 0
+					for i < len(commands) {
+						fmt.Fprintln(res, (commands[i]))
+						i++
+					}
 				}
 			}
 		}
-		if (flag == 0) {
+		if flag == 0 {
 			log.Println("Command not found.")
 			fmt.Fprintln(res, "Command not found. Please Try Again.")
-		}	
+		}
 		// GoString := C.GoString(Cstring)
 		// fmt.Fprintln(res, GoString)
 		// fmt.Fprintln(res, "HALLLO")
