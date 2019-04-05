@@ -125,13 +125,18 @@
         url: "/callme",
         method: "GET",
         success: function(data) {
+          //var parsed = stringParse(com_string);
+          //function    stringParse(command){
+          //  var com_array = command.split(":");
+          //  var command = com_array[0];
+          //  
+          //}
+          //var speech = new SpeechSynthesisUtterance(parsed);
+          //console.log(speech);
           $("#response").append('<li>'+ data + '</li>');
           var synth = window.speechSynthesis;
           var test = document.querySelector("#response").lastChild.innerHTML;
           var speech = new SpeechSynthesisUtterance(test);
-          //var parsed = stringParse(test)
-          //var speech = new SpeechSynthesisUtterance(parsed);
-          //console.log(speech);
           speech.lang = 'en-US';
     //let speak = document.querySelector("#speech");
 
