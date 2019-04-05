@@ -31,7 +31,7 @@ func main() {
 	http.HandleFunc("/callme", func(res http.ResponseWriter, req *http.Request) {
 		//Cstring := C.printNumber()
 		//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-		testString := "List Commands"
+		testString := "Get me the weather"
 		var commands = []string{
 			"Get me the weather",
 			"Events near me",
@@ -67,6 +67,7 @@ func main() {
 					i := 0
 					for i < len(commands) {
 						fmt.Fprintln(res, (commands[i]))
+						fmt.Fprintf(res, "-------------")
 						i++
 					}
 				}
