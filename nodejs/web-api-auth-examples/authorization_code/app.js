@@ -47,14 +47,16 @@ app.get('/login', function(req, res) {
 
   // your application requests authorization
   var scope = 'user-read-private user-read-email';
-  res.redirect('https://accounts.spotify.com/authorize?' +
-    querystring.stringify({
-      response_type: 'code',
-      client_id: client_id,
-      scope: scope,
-      redirect_uri: redirect_uri,
-      state: state
-    }));
+  var url = 'https://accounts.spotify.com/authorize?' +
+  querystring.stringify({
+    response_type: 'code',
+    client_id: client_id,
+    scope: scope,
+    redirect_uri: redirect_uri,
+    state: state
+  })
+  console.log(url);
+  res.redirect(url);
 });
 
 app.get('/callback', function(req, res) {
