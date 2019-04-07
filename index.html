@@ -29,6 +29,7 @@
         <button id="serv">Server Test</button>
         <div class="scroll-box">
         <ul id="response"></ul>
+        <input class="client-input" type="text"></input>
         </div>
     </form>
   </head>
@@ -42,6 +43,7 @@
     let firstButton = document.querySelector("#first");
     let submit = document.querySelector("#submit");
     const constraints = {audio: true, video: false};
+    let user_input = "";
     
     let recordingTimeMS = 4000;
 
@@ -125,18 +127,28 @@
         url: "/callme",
         method: "GET",
         success: function(data) {
-          //var parsed = stringParse(com_string);
-          //function    stringParse(command){
-          //  var com_array = command.split(":");
-          //  var command = com_array[0];
-          //  
-          //}
-          //var speech = new SpeechSynthesisUtterance(parsed);
-          //console.log(speech);
-          $("#response").append('<li>'+ data + '</li>');
+          var parsed = stringParse(data);
+          function    stringParse(command){
+            var com_array = command.split(":");
+            var command = com_array[0];
+            function  dipatchComm(command)
+            {
+              if (command == "Alarm")
+              {
+
+              }
+              else if (command == "Song")
+              {
+
+              }
+            }
+            return com_array[1];
+          }
+          console.log(parsed);
+          $("#response").append('<li>'+ parsed + '</li>');
           var synth = window.speechSynthesis;
           var test = document.querySelector("#response").lastChild.innerHTML;
-          var speech = new SpeechSynthesisUtterance(test);
+          var speech = new SpeechSynthesisUtterance(parsed);
           speech.lang = 'en-US';
     //let speak = document.querySelector("#speech");
 
@@ -150,7 +162,13 @@
       });
     });
   });
- 
+  $(".client-input").on('keyup', function (e) {
+    if (e.keyCode == 13) {
+        user_input = $(".client-input").val();
+        $(".client-input").val("");
+        console.log(user_input);
+    }
+});
 </script>
 <style>
   #startButton      {
@@ -195,6 +213,7 @@ body {
   height: 150px;
   width: 40vw;
   overflow-y: scroll;
+  overflow-x: hidden;
   box-shadow:
   0 15px 30px 0 rgba(0,0,0,0.11),
   0 15px 15px 0 rgba(0,0,0,0.08);
@@ -265,6 +284,21 @@ body {
   position: absolute;
   left: 43%;
 }
+
+.client-input
+{
+  width: 100%;
+  position: relative;
+  bottom: -105px;
+  height: 15%;
+  font-style: italic;
+}
+
+.client-input:focus
+{
+  outline: none;
+}
+
 </style>
 <img class="logo" src="logo1.png">
   </body>
