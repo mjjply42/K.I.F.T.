@@ -162,11 +162,10 @@
       });
     });
   });
-  $(".client-input").on('keyup', function (e) {
-    if (e.keyCode == 13) {
+  $(".client-input").on('keyup', function (event) {
+    if (event.keyCode == 13) {
         user_input = $(".client-input").val();
         $(".client-input").val("");
-        console.log(user_input);
     }
 });
 </script>
