@@ -9,11 +9,13 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
-	"os"
 	"log"
 	"net/http"
-	"strings"
 	"encoding/json"
+	"net/url"
+	"strings"
+	"os"
+	b64 "encoding/base64"
 	com "./commands"
 )
 
@@ -23,6 +25,9 @@ var serverHost string
 var tmpl = template.Must(template.New("tmpl").ParseFiles("index.html"))
 var history string
 var HistoryCounter int = 1
+var SpotifyClientID = "f137e890f3734bd38fdcf1d980158139"
+var SpotifyClientSecrt = "119bb13ee90043919bb53c48baf17fa9"
+var AccessToken = ""
 
 func main() {
 
@@ -35,7 +40,7 @@ func main() {
 	//define endpoints
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/callme", commandhandler)
-	http.HandleFunc("/oauth", oauthHandler)
+	http.HandleFunc("/oauth", oauthTokenHandler)
 	// http.Handle
 
 	//Listen and serve connections
@@ -122,58 +127,57 @@ func handler(res http.ResponseWriter, req *http.Request) {
 	http.ServeFile(res, req, fmt.Sprintf("%s", "index.html"))
 }
 
-func oauthHandler(w http.ResponseWriter, r *http.Request) {
-	// We will be using `httpClient` to make external HTTP requests later in our code
-	httpClient := http.Client{}
+func oauthTokenHandler(w http.ResponseWriter, r *http.Request) {
 
-	clientID := "f137e890f3734bd38fdcf1d980158139"
-	clientSecret := "119bb13ee90043919bb53c48baf17fa9"
-	redirect_uri2 := "http://localhost:3000/"
+	//grab the code which is used to grab auth token
+	code := r.URL.Query().Get("code")
 
-	// First, we need to get the value of the `code` query param
-	err := r.ParseForm()
+	//Create form
+	form := url.Values{}
+	form.Add("code", code)
+	form.Add("grant_type", "authorization_code")
+	form.Add("redirect_uri", "http://localhost:3000/oauth")
+	
+	// Construct post request
+	req, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", strings.NewReader(form.Encode()))
+    if err != nil {
+		log.Print(err)
+        os.Exit(1)
+	}
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	encoded := fmt.Sprintf("Basic %s", b64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", SpotifyClientID, SpotifyClientSecrt))))
+	req.Header.Set("Authorization", encoded)
+	
+	
+	//Using Token grab auth token
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Fprintf(os.Stdout, "could not parse query: %v", err)
-		w.WriteHeader(http.StatusBadRequest)
+        log.Print(err)
+        os.Exit(1)
 	}
-	code := r.FormValue("code")
-
-	r.Header.Set("Authorization", "Basic " + clientSecret)
-
-	// Next, lets for the HTTP request to call the github oauth enpoint
-	// to get our access token
-	reqURL := fmt.Sprintf("https://accounts.spotify.com/authorize?grant_type=authorization_code&client_id=%s&code=%s&redirect_uri=%s", clientID, code, redirect_uri2)
-	req, err := http.NewRequest(http.MethodPost, reqURL, nil)
-	if err != nil {
-		fmt.Fprintf(os.Stdout, "could not create HTTP request: %v", err)
-		w.WriteHeader(http.StatusBadRequest)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
 	}
 
-	// We set this header since we want the response
-	// as JSON
-	req.Header.Set("accept", "application/json")
-
-	// Send out the HTTP request
-	res, err := httpClient.Do(req)
-	if err != nil {
-		fmt.Fprintf(os.Stdout, "could not send HTTP request: %v", err)
-		w.WriteHeader(http.StatusInternalServerError)
-	}
-	defer res.Body.Close()
-
-	log.Print(string(res.Body));
-
-	// Parse the request body into the `OAuthAccessResponse` struct
-	var t OAuthAccessResponse
-	if err := json.NewDecoder(res.Body).Decode(&t); err != nil {
-		fmt.Fprintf(os.Stdout, "could not parse JSON response: %v", err)
-		w.WriteHeader(http.StatusBadRequest)
+	type AccessResp struct {
+		AccessToken  string `json:"access_token"`
+		TokenType    string `json:"token_type"`
+		ExpiresIn    int    `json:"expires_in"`
+		RefreshToken string `json:"refresh_token"`
+		Scope        string `json:"scope"`
 	}
 
-	// Finally, send a response to redirect the user to the "welcome" page
-	// with the access token
-	w.Header().Set("Location", "/welcome.html?access_token="+t.AccessToken)
-	w.WriteHeader(http.StatusFound)
+	var m AccessResp
+	err = json.Unmarshal(body, &m)
+
+	// Save accessToken for later use
+	AccessToken = m.AccessToken
+	fmt.Println(AccessToken)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 type OAuthAccessResponse struct {
