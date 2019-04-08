@@ -177,3 +177,68 @@ func SendEmail(message string, who string) string{
 	}
 	return fmt.Sprintf("Message Sent")
 }
+
+func PlayMusic(accessToken string) string{
+	if (accessToken == "") {
+		return "Please sign in to spotify first"
+	}
+	
+	//get available devices
+	client := &http.Client{}
+	req, nil := http.NewRequest("GET", "https://api.spotify.com/v1/me/player/devices", nil)
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))
+	resp, err := client.Do(req)
+	if err != nil {
+		return ("Error during music play")
+	}
+	
+	//Grab the body from response
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return ("Error during music play")
+	}
+	
+	type connectedDevices struct {
+		Devices []struct {
+			ID               string `json:"id"`
+			IsActive         bool   `json:"is_active"`
+			IsPrivateSession bool   `json:"is_private_session"`
+			IsRestricted     bool   `json:"is_restricted"`
+			Name             string `json:"name"`
+			Type             string `json:"type"`
+			VolumePercent    int    `json:"volume_percent"`
+		} `json:"devices"`
+	}
+	
+	//parse json
+	var m connectedDevices
+	err = json.Unmarshal(body, &m)
+
+	//if length of devices equal to zero
+	if (len(m.Devices) == 0) {
+		return "Please open a device"
+	}
+
+	//construct url
+	url := fmt.Sprintf("https://api.spotify.com/v1/me/player/play?device_id=%s", m.Devices[0].ID)
+	log.Print(url)
+
+	if (PlayMusicHelper(url, accessToken) == 0) {
+		return "Error playing music"
+	}
+	return "Music now playing"
+}
+
+func PlayMusicHelper(url string, accessToken string) int{
+
+	client := &http.Client{}
+
+	//@PUT and play music with device id
+	req, err := http.NewRequest("PUT", url, nil)
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))
+	_, err = client.Do(req)
+	if err != nil {
+		return 0
+	}
+	return 1
+}

@@ -51,13 +51,14 @@ func main() {
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber()
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "Check History"
+	testString := "Play Music"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
 		"Send Email",
 		"Search dictionary for term",
 		"Check History",
+		"Play Music",
 	}
 	flag := 0
 
@@ -87,6 +88,9 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 			} else if (i == 4) {
 				log.Println(history)
 				fmt.Fprintln(res, history)
+				} else if (i == 5) {
+					log.Println(com.PlayMusic(AccessToken))
+					fmt.Fprintln(res, com.PlayMusic(AccessToken))
 			}
 		}
 	}
@@ -127,6 +131,49 @@ func handler(res http.ResponseWriter, req *http.Request) {
 	http.ServeFile(res, req, fmt.Sprintf("%s", "index.html"))
 }
 
+
+func GetWeather(city string) string{
+	Apikey := "a84567876c635d5929647ab1879c3122"
+	//define url for get request
+	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?q=%s&units=imperial&APPID=%s", city, Apikey)
+	fmt.Printf("Performed Get on %s\n", url )
+	//perform get request 
+	resp, err := http.Get(url)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	//Grab the body from response
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	// Create a place where the json data will be stored
+	type WeatherData struct {
+		Main struct {
+			Humidity int     `json:"humidity"`
+			Pressure int     `json:"pressure"`
+			Temp     float64 `json:"temp"`
+			TempMax  int     `json:"temp_max"`
+			TempMin  float64 `json:"temp_min"`
+		} `json:"main"`
+		Weather    []struct {
+			Description string `json:"description"`
+			Icon        string `json:"icon"`
+			ID          int    `json:"id"`
+			Main        string `json:"main"`
+		} `json:"weather"`
+		Wind struct {
+			Deg   int     `json:"deg"`
+			Speed float64 `json:"speed"`
+		} `json:"wind"`
+	}
+	
+	var m WeatherData
+	err = json.Unmarshal(body, &m)
+	return fmt.Sprintf("The temperature in %s is %.2f degrees farenheit and it is %s.\n", city, m.Main.Temp, m.Weather[0].Description)
+}
+
 func oauthTokenHandler(w http.ResponseWriter, r *http.Request) {
 
 	//grab the code which is used to grab auth token
@@ -147,7 +194,6 @@ func oauthTokenHandler(w http.ResponseWriter, r *http.Request) {
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	encoded := fmt.Sprintf("Basic %s", b64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", SpotifyClientID, SpotifyClientSecrt))))
 	req.Header.Set("Authorization", encoded)
-	
 	
 	//Using Token grab auth token
 	client := &http.Client{}
