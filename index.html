@@ -152,6 +152,16 @@
                     $(".client-input").val("");
                     if (user_input > 59)
                       user_input = 59;
+                    if (isNaN(user_input))
+                      {
+                        console.log("SKRT");
+                        $("#response").append('<h1 class="error-mess" style="color: red;">'+ "ENTER A VALID NUMBER" + '</h1>');
+                        setTimeout(function() 
+                        { 
+                          let error_txt = document.querySelector("#response");
+                          error_txt.removeChild(error_txt.lastChild);
+                        }, 2000);
+                      }
                     console.log(user_input);
                     //function openAlarm(user_input)
                     //{}
@@ -160,8 +170,18 @@
               }
               else if (comm == "Song")
               {
-                console.log("Yogurt");
-
+                $(".client-input").show();
+                $("#response").append('<li>'+ "Enter Your Song Choice" + '</li>');
+                var song_synth = window.speechSynthesis;
+                var song_speech = new SpeechSynthesisUtterance("Enter Alarm Time");
+                song_speech.lang = 'en-US';
+                song_synth.speak(song_speech);
+                $(".client-input").on('keyup', function (event) 
+                {
+                  if (event.keyCode == 13) 
+                  {
+                  }
+                });
               }
               else
               {
