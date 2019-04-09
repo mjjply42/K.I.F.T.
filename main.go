@@ -88,7 +88,7 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 			} else if (i == 4) {
 				log.Println(history)
 				fmt.Fprintln(res, history)
-				} else if (i == 5) {
+			} else if (i == 5) {
 					log.Println(com.PlayMusic(AccessToken))
 					fmt.Fprintln(res, com.PlayMusic(AccessToken))
 			}
