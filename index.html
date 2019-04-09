@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>KIFT</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <br>
-    <div class="user-field">
-      <button id="login">User Info</button><br><br>
-      <form action="" method="POST" autocomplete="" class="user-form">
+
+<head>
+  <meta charset="UTF-8">
+  <title>KIFT</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <br>
+  <div class="user-field">
+    <button id="login">User Info</button><br><br>
+    <form action="" method="POST" autocomplete="" class="user-form">
       <input type="text" id="first" value="First(Optional)" name="first-value" style="display: none;">
       <input type="text" id="last" value="Last(Optional)" name="last-value" style="display: none;"><br><br>
       <button type="submit" id="submit" style="display: none;">Save</button>
     </form>
-    </div>
-    <div class="left">
-      <button id="startButton" class="button">
-        Record
-      </button>
-      <p2 class="prev" style="display: none;">Listen</p2>
-      <audio id="preview" autoplay muted></audio>
-    </div>
-    <div class="right">
-      <audio id="recording" style="display: none;"controls></audio>
-    </div>
-    <div class="bottom">
-      <pre id="log"></pre>
-    </div>
-        <button id="serv">Server Test</button>
-        <div class="scroll-box">
-        <ul id="response"></ul>
-        </div>
-    </form>
-  </head>
-  <body>
-    <script> let preview = document.getElementById("preview");
+  </div>
+  <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=f137e890f3734bd38fdcf1d980158139&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&redirect_uri=http://localhost:3000/oauth" >
+    Login with spotify
+  </a>
+  <div class="left">
+    <button id="startButton" class="button">
+      Record
+    </button>
+    <p2 class="prev">Listen</p2>
+    <audio id="preview" autoplay muted></audio>
+  </div>
+  <div class="right">
+    <audio id="recording" controls></audio>
+  </div>
+  <div class="bottom">
+    <pre id="log"></pre>
+  </div>
+  <button id="serv">Server Test</button>
+  <div class="scroll-box">
+    <ul id="response"></ul>
+  </div>
+  </form>
+</head>
+
+<body>
+  <script> let preview = document.getElementById("preview");
     let recording = document.getElementById("recording");
     let startButton = document.getElementById("startButton");
     let stopButton = document.getElementById("stopButton");
@@ -41,32 +46,27 @@
     let lastButton = document.querySelector("#last");
     let firstButton = document.querySelector("#first");
     let submit = document.querySelector("#submit");
-    const constraints = {audio: true, video: false};
-    let user_input = "";
-    
+    const constraints = { audio: true, video: false };
+
     let recordingTimeMS = 4000;
 
-    $(".user-form").submit(function(e) {
-    e.preventDefault();
-});
+    $(".user-form").submit(function (e) {
+      e.preventDefault();
+    });
 
-    submit.onclick = function()
-    {
+    submit.onclick = function () {
       localStorage.setItem('first', firstButton.value);
       localStorage.setItem('last', lastButton.value);
       var name = localStorage.getItem('first') + localStorage.getItem('last');
     }
-    
-    loginButton.onclick = function()
-    {
-      if (lastButton.style.display == "none")
-      {
+
+    loginButton.onclick = function () {
+      if (lastButton.style.display == "none") {
         lastButton.style.display = "block";
         firstButton.style.display = "block";
         submit.style.display = "block";
       }
-      else
-      {
+      else {
         lastButton.style.display = "none";
         firstButton.style.display = "none";
         submit.style.display = "none";
@@ -79,46 +79,45 @@
     function startRecording(stream, lengthInMS) {
       let recorder = new MediaRecorder(stream);
       let data = [];
-     
+
       recorder.ondataavailable = event => data.push(event.data);
       recorder.start();
-     
+
       let stopped = new Promise((resolve, reject) => {
         recorder.onstop = resolve;
         recorder.onerror = event => reject(event.name);
       });
-    
-      let recorded = wait(lengthInMS).then(
+
+      let recorded = wait(lengthInMS).then(
         () => recorder.state == "recording" && recorder.stop()
-      );
-     
+      );
+
       return Promise.all([
         stopped,
         recorded
       ])
-      .then(() => data);
+        .then(() => data);
     }
     function stop(stream) {
       stream.getTracks().forEach(track => track.stop());
     }
-    startButton.addEventListener("click", function() {
+    startButton.addEventListener("click", function () {
       navigator.mediaDevices.getUserMedia(constraints).then(stream => {
         preview.srcObject = stream;
       }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
-      .then (recordedChunks => {
-        let recordedBlob = new Blob(recordedChunks, { type: "audio/wav" });
-        recording.src = URL.createObjectURL(recordedBlob);
-        var a = document.createElement('a');
-        document.body.appendChild(a);
-        a.style = 'display:none';
-        var url = window.URL.createObjectURL(recordedBlob);
-        a.href = url;
-        a.download = 'request.wav';
-        a.click();
-        window.URL.revokeObjectURL(url);
-      })
+        .then(recordedChunks => {
+          let recordedBlob = new Blob(recordedChunks, { type: "audio/wav" });
+          recording.src = URL.createObjectURL(recordedBlob);
+          var a = document.createElement('a');
+          document.body.appendChild(a);
+          a.style = 'display:none';
+          var url = window.URL.createObjectURL(recordedBlob);
+          a.href = url;
+          a.download = 'request.wav';
+          a.click();
+          window.URL.revokeObjectURL(url);
+        })
     }, false);</script>
-
 <script>
   $(document).ready(function() {
     $("#serv").on('click', function() {
@@ -197,160 +196,136 @@
             dispatchComm(command);
           }
         },
-      });
-      var scroll_bar = document.querySelector(".scroll-box");
-      scroll_bar.scrollTop= scroll_bar.scrollHeight;
     });
   });
-</script>
-<style>
-  body  {
-    overflow-x: hidden;
-  }
+});
 
-  #startButton      {
-    background-color: blue;
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: 10px;
-    margin-left: -50px;
-}
+  </script>
+  <style>
+    #startButton {
+      background-color: blue;
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: 10px;
+      margin-left: -50px;
+    }
 
-li  {
-  list-style-type: none;
-}
-#stopButton       {
-    background-color: red;
-    color: white;
-}
-body {
-  width: 100vw;
-  height: 100vh;
-  font-family: "lato", sans-serif;
-  color: #E8AFE1;
-  background: #ad1283; /* Old browsers */
-  background: -moz-linear-gradient(-45deg, #ad1283 0%, #8f45d8 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg, #ad1283 0%,#8f45d8 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg, #ad1283 0%,#8f45d8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ad1283', endColorstr='#8f45d8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-}
+    li {
+      list-style-type: none;
+    }
 
-.logo {
-  position: absolute;
-   top: 50%;
-   left: 50%;
-   width: 300px;
-   height: 300px;
-   margin-top: -250px;
-   margin-left: -170px;
-}
-.scroll-box {
-  height: 150px;
-  width: 40vw;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  box-shadow:
-  0 15px 30px 0 rgba(0,0,0,0.11),
-  0 15px 15px 0 rgba(0,0,0,0.08);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: 60px;
-  margin-left: -290px;
-}
+    #stopButton {
+      background-color: red;
+      color: white;
+    }
 
-.prev  {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: 230px;
-  margin-left: -30px;
-}
+    body {
+      width: 100vw;
+      height: 100vh;
+      font-family: "lato", sans-serif;
+      color: #E8AFE1;
+      background: #ad1283;
+      /* Old browsers */
+      background: -moz-linear-gradient(-45deg, #ad1283 0%, #8f45d8 100%);
+      /* FF3.6-15 */
+      background: -webkit-linear-gradient(-45deg, #ad1283 0%, #8f45d8 100%);
+      /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(135deg, #ad1283 0%, #8f45d8 100%);
+      /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ad1283', endColorstr='#8f45d8', GradientType=1);
+      /* IE6-9 fallback on horizontal gradient */
+    }
 
-#recording  {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: 270px;
-  margin-left: -150px;
-}
+    .logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      margin-top: -250px;
+      margin-left: -170px;
+    }
 
-#startButton {
-  width: 40rem;
-  padding: .5rem 1rem;
-  margin: 0 1rem 1rem;
-  background: #5fb3b3;
-  border: none;
-  border-radius: .5rem;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: bold;
-  position: absolute;
-   top: 50%;
-   left: 50%;
-   margin-top: -30px;
-   margin-left: -325px;
-}
+    .scroll-box {
+      height: 150px;
+      width: 40vw;
+      overflow-y: scroll;
+      box-shadow:
+        0 15px 30px 0 rgba(0, 0, 0, 0.11),
+        0 15px 15px 0 rgba(0, 0, 0, 0.08);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: 60px;
+      margin-left: -290px;
+    }
 
-.user-field   {
-  height: 100px;
-  width: 500px;
-  position: absolute;
-  left: 32%;
-}
+    .prev {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: 230px;
+      margin-left: -30px;
+    }
 
-.user-field input {
-  width: 40%;
-  height: 2em;
-}
+    #recording {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: 270px;
+      margin-left: -150px;
+    }
 
-#submit   {
-  width: 15%;
-  height: 20%;
-}
-#first  {
-  float: left;
-}
-#last   {
-  float: right;
-}
+    #startButton {
+      width: 40rem;
+      padding: .5rem 1rem;
+      margin: 0 1rem 1rem;
+      background: #5fb3b3;
+      border: none;
+      border-radius: .5rem;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: bold;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -30px;
+      margin-left: -325px;
+    }
 
-#login    {
-  position: absolute;
-  left: 43%;
-}
+    .user-field {
+      height: 100px;
+      width: 500px;
+      position: absolute;
+      left: 32%;
+    }
 
-.client-input
-{
-  height: 30px;
-  width: 38vw;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  box-shadow:
-  0 15px 30px 0 rgba(0,0,0,0.11),
-  0 15px 15px 0 rgba(0,0,0,0.08);
-  position: absolute;
-  top: 72%;
-  left: 51%;
-  margin-top: 60px;
-  margin-left: -290px;
-  border-style: none;
-  background-color: #2d2d2d;
-  opacity: 0.3;
-  font-size: 18px;
-  color: white;
-  border-radius: 18px;
-}
+    .user-field input {
+      width: 40%;
+      height: 2em;
+    }
 
-.client-input:focus
-{
-  outline: none;
-}
+    #submit {
+      width: 15%;
+      height: 20%;
+    }
 
-</style>
-<img class="logo" src="logo1.png">
-<textarea class="client-input" style="display: none;"></textarea>
-  </body>
+    #first {
+      float: left;
+    }
+
+    #last {
+      float: right;
+    }
+
+    #login {
+      position: absolute;
+      left: 43%;
+    }
+  </style>
+  <img class="logo" src="logo1.png">
+</body>
+
 </html>
