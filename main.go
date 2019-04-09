@@ -31,7 +31,7 @@ func main() {
 	http.HandleFunc("/callme", func(res http.ResponseWriter, req *http.Request) {
 		//Cstring := C.printNumber()
 		//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-		testString := "Get me the weather"
+		testString := "Set Alarm"
 		var commands = []string{
 			"Get me the weather",
 			"Events near me",
@@ -62,6 +62,9 @@ func main() {
 				} else if i == 3 {
 					log.Println(com.SearchTerm("word"))
 					fmt.Fprintln(res, com.SearchTerm("word"))
+				} else if i == 4 {
+					log.Println("Alarm: Enter Alarm Time in minutes (MAX 59)")
+					fmt.Fprintln(res, ("Alarm: Enter Alarm Time in minutes (MAX 59)"))
 				} else if i == 6 {
 					log.Println((commands))
 					i := 0
