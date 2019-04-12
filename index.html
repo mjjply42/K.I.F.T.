@@ -6,6 +6,17 @@
   <title>KIFT</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <br>
+  <button class="alarm-start">Animate</button>
+  <div class="bar-grow">
+    <div class="left-side">
+      <h1 class="left-minute">2</h1>
+      <h1 class="left-second">3</h1>
+    </div>
+    <div class="right-side">
+      <h1 class="right-minute">4</h1>
+      <h1 class="right-second">7</h1>
+    </div>
+  </div>
   <div class="user-field">
     <button id="login">User Info</button><br><br>
     <form action="" method="POST" autocomplete="" class="user-form">
@@ -38,7 +49,8 @@
 </head>
 
 <body>
-  <script> let preview = document.getElementById("preview");
+  <script> 
+    let preview = document.getElementById("preview");
     let recording = document.getElementById("recording");
     let startButton = document.getElementById("startButton");
     let stopButton = document.getElementById("stopButton");
@@ -46,6 +58,10 @@
     let lastButton = document.querySelector("#last");
     let firstButton = document.querySelector("#first");
     let submit = document.querySelector("#submit");
+    let alarm_butt = document.querySelector(".alarm-start");
+    let alarm = document.querySelector(".bar-grow");
+    let left_side = document.querySelector(".left-side");
+    let right_side = document.querySelector(".right-side");
     const constraints = { audio: true, video: false };
 
     let recordingTimeMS = 4000;
@@ -58,6 +74,58 @@
       localStorage.setItem('first', firstButton.value);
       localStorage.setItem('last', lastButton.value);
       var name = localStorage.getItem('first') + localStorage.getItem('last');
+    }
+    alarm_butt.onclick = function testAlarm()
+    {
+      let time = 32;
+      let add = 0;
+      console.log("damnn");
+      let open = setInterval(animateWidth, 2);
+
+      function  animateWidth(time)
+      {
+        if(alarm.style.width != "120px")
+        {
+          alarm.style.width = add + 'px';
+          add++;
+        }
+        else
+        {
+          clearInterval(open);
+          add = 0;
+          open = setInterval(animateHeight, 2);
+
+          function  animateHeight()
+          {
+            if(alarm.style.height != "80px")
+            {
+              alarm.style.height = add + 'px';
+              add++;
+            }
+            else
+            {
+              clearInterval(open);
+              let reveal  = setInterval(showNumber, 30);
+              add = 0;
+
+              function  showNumber()
+              {
+                if(left_side.style.opacity < 0.9 && right_side.style.opacity < 0.9)
+                {
+                  left_side.style.opacity = 0 + '.' + add;
+                  right_side.style.opacity = 0 + '.' + add;
+                  add++;
+                }
+                else
+                {
+                  clearInterval(reveal);
+                }
+              }
+            }
+          }
+        }
+      }
+
     }
 
     loginButton.onclick = function () {
@@ -153,7 +221,6 @@
                       user_input = 59;
                     if (isNaN(user_input))
                       {
-                        console.log("SKRT");
                         $("#response").append('<h1 class="error-mess" style="color: red;">'+ "ENTER A VALID NUMBER" + '</h1>');
                         setTimeout(function() 
                         { 
@@ -323,6 +390,35 @@
     #login {
       position: absolute;
       left: 43%;
+    }
+
+    .bar-grow   {
+      height: 2px;
+      width: 1px;
+      background-color: red;
+      position: absolute;
+    }
+    .left-side  {
+      background-color: blue;
+      opacity: 0.0;
+      height: 100%;
+      width: 40%;
+      float: left;
+      position: relative;
+    }
+    .right-side  {
+      background-color: green;
+      opacity: 0.0;
+      height: 100%;
+      width: 40%;
+      float: right;
+      position: relative;
+    }
+    .left-minute, .right-minute  {
+      float: left
+    }
+    .left-second, .right-second   {
+      float: right;
     }
   </style>
   <img class="logo" src="logo1.png">

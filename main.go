@@ -5,17 +5,18 @@ package main
 //#include <stdlib.h>
 import "C"
 import (
+	b64 "encoding/base64"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"encoding/json"
 	"net/url"
-	"strings"
 	"os"
-	b64 "encoding/base64"
+	"strings"
+
 	com "./commands"
 )
 
@@ -36,7 +37,6 @@ func main() {
 	//flag.StringVar(&serverDirectory, "dir", "index.html", "Server start file")
 	flag.Parse()
 
-
 	//define endpoints
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/callme", commandhandler)
@@ -50,7 +50,7 @@ func main() {
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber()
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "Play Music"
+	testString := "Set Alarm"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
@@ -60,7 +60,7 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 		"Play Music",
 		"List Commands",
 	}
-	
+
 	//add string from user to a history buffer
 	history = history + fmt.Sprintf("%d. %s\n", HistoryCounter, testString)
 	HistoryCounter += 1
@@ -89,7 +89,7 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 			} else if i == 4 {
 				log.Println("Alarm: Enter Alarm Time in minutes (MAX 59)")
 				fmt.Fprintln(res, ("Alarm: Enter Alarm Time in minutes (MAX 59)"))
-			} else if (i == 5) {
+			} else if i == 5 {
 				log.Println(com.PlayMusic(AccessToken))
 				fmt.Fprintln(res, com.PlayMusic(AccessToken))
 			} else if i == 6 {
@@ -103,10 +103,10 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 			}
 		}
 	}
-	if (flag == 0) {
+	if flag == 0 {
 		log.Println("Command not found.")
 		fmt.Fprintln(res, "Command not found. Please Try Again.")
-	} 
+	}
 }
 
 func handler(res http.ResponseWriter, req *http.Request) {
@@ -114,8 +114,8 @@ func handler(res http.ResponseWriter, req *http.Request) {
 	log.Println(path)
 	data, err := ioutil.ReadFile(string(path))
 	userIP := req.RemoteAddr
-	log.Println(userIP);
-	
+	log.Println(userIP)
+
 	if err == nil {
 		var contentType string
 
@@ -140,7 +140,6 @@ func handler(res http.ResponseWriter, req *http.Request) {
 	http.ServeFile(res, req, fmt.Sprintf("%s", "index.html"))
 }
 
-
 func oauthTokenHandler(w http.ResponseWriter, r *http.Request) {
 
 	//grab the code which is used to grab auth token
@@ -151,27 +150,27 @@ func oauthTokenHandler(w http.ResponseWriter, r *http.Request) {
 	form.Add("code", code)
 	form.Add("grant_type", "authorization_code")
 	form.Add("redirect_uri", "http://localhost:3000/oauth")
-	
+
 	// Construct post request
 	req, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", strings.NewReader(form.Encode()))
-    if err != nil {
+	if err != nil {
 		log.Print(err)
-        os.Exit(1)
+		os.Exit(1)
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	encoded := fmt.Sprintf("Basic %s", b64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", SpotifyClientID, SpotifyClientSecrt))))
 	req.Header.Set("Authorization", encoded)
-	
+
 	//Using Token grab auth token
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-        log.Print(err)
-        os.Exit(1)
+		log.Print(err)
+		os.Exit(1)
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
+	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
 	}
