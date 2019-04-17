@@ -50,7 +50,7 @@ func main() {
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber()
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "Set Alarm"
+	testString := "Play Music"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
