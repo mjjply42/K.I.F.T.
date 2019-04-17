@@ -62,6 +62,7 @@
     let alarm = document.querySelector(".bar-grow");
     let left_side = document.querySelector(".left-side");
     let right_side = document.querySelector(".right-side");
+    let spotify_button = document.querySelector(".spotify_button");
     const constraints = { audio: true, video: false };
 
     let recordingTimeMS = 4000;
@@ -237,17 +238,12 @@
               else if (comm == "Song")
               {
                 $(".client-input").show();
-                $("#response").append('<li>'+ "Enter Your Song Choice" + '</li>');
+                $("#response").append('<li>'+ "Please Sign In First" + '</li>');
                 var song_synth = window.speechSynthesis;
-                var song_speech = new SpeechSynthesisUtterance("Enter Alarm Time");
+                var song_speech = new SpeechSynthesisUtterance("Sign In");
                 song_speech.lang = 'en-US';
                 song_synth.speak(song_speech);
-                $(".client-input").on('keyup', function (event) 
-                {
-                  if (event.keyCode == 13) 
-                  {
-                  }
-                });
+
               }
               else
               {

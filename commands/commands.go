@@ -97,12 +97,12 @@ func SearchTerm(term string) string {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		return ("Error during search")
+		return ("Error: Error during search. Try again")
 	}
 	//Grab the body from response
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return ("Error during search")
+		return ("Error: Error during search. Try again")
 	}
 
 	type Definition struct {
@@ -166,31 +166,31 @@ func SendEmail(message string, who string) string {
 	cmd := exec.Command("python", "./PyCommands/command_email.py", message, who, username, passwd)
 	err := cmd.Run()
 	if err != nil {
-		return fmt.Sprintf("Command finished with error: %v", err)
+		return fmt.Sprintf("Error: Command finished with error: %v", err)
 	}
-	return fmt.Sprintf("Message Sent")
+	return fmt.Sprintf("Email: Message Sent")
 }
 
-func PlayMusic(accessToken string) string{
-	if (accessToken == "") {
-		return "Please sign in to spotify first"
+func PlayMusic(accessToken string) string {
+	if accessToken == "" {
+		return "Song: Log in first. Repeat command."
 	}
-	
+
 	//get available devices
 	client := &http.Client{}
 	req, nil := http.NewRequest("GET", "https://api.spotify.com/v1/me/player/devices", nil)
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))
 	resp, err := client.Do(req)
 	if err != nil {
-		return ("Error during music play")
+		return ("Error: Error during music play. Try again")
 	}
-	
+
 	//Grab the body from response
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return ("Error during music play")
+		return ("Error: Error during music play. Try again")
 	}
-	
+
 	type connectedDevices struct {
 		Devices []struct {
 			ID               string `json:"id"`
@@ -202,26 +202,26 @@ func PlayMusic(accessToken string) string{
 			VolumePercent    int    `json:"volume_percent"`
 		} `json:"devices"`
 	}
-	
+
 	//parse json
 	var m connectedDevices
 	err = json.Unmarshal(body, &m)
 
 	//if length of devices equal to zero
-	if (len(m.Devices) == 0) {
+	if len(m.Devices) == 0 {
 		return "Please open a device"
 	}
 
 	//construct url
 	url := fmt.Sprintf("https://api.spotify.com/v1/me/player/play?device_id=%s", m.Devices[0].ID)
 	fmt.Println(url)
-	if (PlayMusicHelper(url, accessToken) == 0) {
-		return "Error playing music"
+	if PlayMusicHelper(url, accessToken) == 0 {
+		return "Error: Error playing music"
 	}
-	return "Music now playing"
+	return "Success: Music now playing"
 }
 
-func PlayMusicHelper(url string, accessToken string) int{
+func PlayMusicHelper(url string, accessToken string) int {
 
 	client := &http.Client{}
 
