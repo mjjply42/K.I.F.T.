@@ -17,26 +17,24 @@
       <h1 class="right-second">7</h1>
     </div>
   </div>
-  <div class="user-field">
+  <!--div class="user-field">
     <button id="login">User Info</button><br><br>
     <form action="" method="POST" autocomplete="" class="user-form">
       <input type="text" id="first" value="First(Optional)" name="first-value" style="display: none;">
       <input type="text" id="last" value="Last(Optional)" name="last-value" style="display: none;"><br><br>
       <button type="submit" id="submit" style="display: none;">Save</button>
     </form>
-  </div>
-  <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=f137e890f3734bd38fdcf1d980158139&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&redirect_uri=http://localhost:3000/oauth" >
-    Login with spotify
-  </a>
+  </div-->
+
   <div class="left">
     <button id="startButton" class="button">
       Record
     </button>
-    <p2 class="prev">Listen</p2>
-    <audio id="preview" autoplay muted></audio>
+    <!--p2 class="prev">Listen</p2-->
+    <!--audio id="preview" autoplay muted></audio-->
   </div>
   <div class="right">
-    <audio id="recording" controls></audio>
+    <!--audio id="recording" controls></audio-->
   </div>
   <div class="bottom">
     <pre id="log"></pre>
@@ -62,7 +60,7 @@
     let alarm = document.querySelector(".bar-grow");
     let left_side = document.querySelector(".left-side");
     let right_side = document.querySelector(".right-side");
-    let spotify_button = document.querySelector(".spotify_button");
+    let spotify_butt = document.querySelector(".spotify-button");
     const constraints = { audio: true, video: false };
 
     let recordingTimeMS = 4000;
@@ -71,11 +69,11 @@
       e.preventDefault();
     });
 
-    submit.onclick = function () {
-      localStorage.setItem('first', firstButton.value);
-      localStorage.setItem('last', lastButton.value);
-      var name = localStorage.getItem('first') + localStorage.getItem('last');
-    }
+    //submit.onclick = function () {
+      //localStorage.setItem('first', firstButton.value);
+      //localStorage.setItem('last', lastButton.value);
+      //var name = localStorage.getItem('first') + localStorage.getItem('last');
+    //}
     alarm_butt.onclick = function testAlarm()
     {
       let time = 32;
@@ -129,18 +127,18 @@
 
     }
 
-    loginButton.onclick = function () {
-      if (lastButton.style.display == "none") {
-        lastButton.style.display = "block";
-        firstButton.style.display = "block";
-        submit.style.display = "block";
-      }
-      else {
-        lastButton.style.display = "none";
-        firstButton.style.display = "none";
-        submit.style.display = "none";
-      }
-    }
+    //loginButton.onclick = function () {
+      //if (lastButton.style.display == "none") {
+        //lastButton.style.display = "block";
+        //firstButton.style.display = "block";
+        //submit.style.display = "block";
+      //}
+      //else {
+        //lastButton.style.display = "none";
+        //firstButton.style.display = "none";
+        //submit.style.display = "none";
+      //}
+    //}
 
     function wait(delayInMS) {
       return new Promise(resolve => setTimeout(resolve, delayInMS));
@@ -237,13 +235,12 @@
               }
               else if (comm == "Song")
               {
-                $(".client-input").show();
+                $(".spotify-button").show();
                 $("#response").append('<li>'+ "Please Sign In First" + '</li>');
                 var song_synth = window.speechSynthesis;
                 var song_speech = new SpeechSynthesisUtterance("Sign In");
                 song_speech.lang = 'en-US';
                 song_synth.speak(song_speech);
-
               }
               else
               {
@@ -356,6 +353,11 @@
       left: 50%;
       margin-top: -30px;
       margin-left: -325px;
+      z-index: 1;
+    }
+
+    #startButton:hover{
+      cursor: pointer;
     }
 
     .user-field {
@@ -435,10 +437,18 @@
       font-size: 18px;
       color: white;
       border-radius: 18px;
-}
-
+    }
+    .spotify-button {
+      top: 72%;
+      left: 66%;
+      position: absolute;
+      margin-top: 60px;
+      margin-left: -290px;
+    }
   </style>
   <img class="logo" src="logo1.png">
+      <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=f137e890f3734bd38fdcf1d980158139&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&redirect_uri=http://localhost:3000/oauth"><image class="spotify-button" src="Spotify_Logo_RGB_GREEN.png" style="width: auto; height: 35px; display: none;"></image>
+      </a>
   <textarea class="client-input" style="display: none;"></textarea>
 </body>
 

@@ -209,7 +209,7 @@ func PlayMusic(accessToken string) string {
 
 	//if length of devices equal to zero
 	if len(m.Devices) == 0 {
-		return "Please open a device"
+		return "Error: Please open a device"
 	}
 
 	//construct url
