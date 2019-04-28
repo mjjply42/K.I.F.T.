@@ -17,14 +17,14 @@
       <h1 class="right-second">7</h1>
     </div>
   </div>
-  <!--div class="user-field">
-    <button id="login">User Info</button><br><br>
+  <div class="user-field">
     <form action="" method="POST" autocomplete="" class="user-form">
-      <input type="text" id="first" value="First(Optional)" name="first-value" style="display: none;">
-      <input type="text" id="last" value="Last(Optional)" name="last-value" style="display: none;"><br><br>
-      <button type="submit" id="submit" style="display: none;">Save</button>
+      <input type="text" id="username" placeholder="Username" name="first-value">
+      <input type="text" id="location" placeholder="Location" name="location">
+      <br><br>
+      <button type="submit" id="submit" style="margin: 10 auto;">Connect</button>
     </form>
-  </div-->
+  </div>
 
   <div class="left">
     <button id="startButton" class="button">
@@ -186,6 +186,8 @@
         })
     }, false);</script>
 <script>
+
+
   $(document).ready(function() {
     $("#serv").on('click', function() {
       $.ajax({
@@ -373,8 +375,8 @@
     }
 
     #submit {
-      width: 15%;
-      height: 20%;
+      width: 150px;
+      margin: 0 25%;
     }
 
     #first {
