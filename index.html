@@ -17,12 +17,13 @@
       <h1 class="right-second">7</h1>
     </div>
   </div>
+  <p id="notification" style="display: none"></p>
   <div class="user-field">
-    <form action="" method="POST" autocomplete="" class="user-form">
-      <input type="text" id="username" placeholder="Username" name="first-value">
-      <input type="text" id="location" placeholder="Location" name="location">
+    <form id="users" action="" method="POST">
+      <input type="text" id="username" placeholder="Username" name="username" value="" required>
+      <input type="text" id="location" placeholder="Location" name="location" value="" required>
       <br><br>
-      <button type="submit" id="submit" style="margin: 10 auto;">Connect</button>
+      <button type="submit" id="connect">Connect</button>
     </form>
   </div>
 
@@ -47,7 +48,37 @@
 </head>
 
 <body>
-  <script> 
+  <script>
+    let connectButton = document.querySelector('#connect')
+    
+    $("#users").submit(function (e){
+      e.preventDefault();
+      let username = $("#username").val();
+      let locations = $("#location").val();
+      $.ajax({
+        url: "http://localhost:3000/users",
+        type: "POST",
+        data: JSON.stringify({
+          "username": username,
+          "location": locations
+        }),
+        contentType: "application/json",
+        success: function (response) {
+          alert("Successfully connected to server")
+          $("#users").hide()
+        },
+        error: function(error) {
+          alert("Error during connection")
+        }
+      })
+    })
+    // console.log(notification);
+    // console.log(username);
+    // console.log(locations);
+    // console.log(connectButton);
+
+  </script>
+  <script>
     let preview = document.getElementById("preview");
     let recording = document.getElementById("recording");
     let startButton = document.getElementById("startButton");
@@ -61,7 +92,10 @@
     let left_side = document.querySelector(".left-side");
     let right_side = document.querySelector(".right-side");
     let spotify_butt = document.querySelector(".spotify-button");
-    const constraints = { audio: true, video: false };
+    const constraints = {
+      audio: true,
+      video: false
+    };
 
     let recordingTimeMS = 4000;
 
@@ -70,53 +104,40 @@
     });
 
     //submit.onclick = function () {
-      //localStorage.setItem('first', firstButton.value);
-      //localStorage.setItem('last', lastButton.value);
-      //var name = localStorage.getItem('first') + localStorage.getItem('last');
+    //localStorage.setItem('first', firstButton.value);
+    //localStorage.setItem('last', lastButton.value);
+    //var name = localStorage.getItem('first') + localStorage.getItem('last');
     //}
-    alarm_butt.onclick = function testAlarm()
-    {
+    alarm_butt.onclick = function testAlarm() {
       let time = 32;
       let add = 0;
       console.log("damnn");
       let open = setInterval(animateWidth, 2);
 
-      function  animateWidth(time)
-      {
-        if(alarm.style.width != "120px")
-        {
+      function animateWidth(time) {
+        if (alarm.style.width != "120px") {
           alarm.style.width = add + 'px';
           add++;
-        }
-        else
-        {
+        } else {
           clearInterval(open);
           add = 0;
           open = setInterval(animateHeight, 2);
 
-          function  animateHeight()
-          {
-            if(alarm.style.height != "80px")
-            {
+          function animateHeight() {
+            if (alarm.style.height != "80px") {
               alarm.style.height = add + 'px';
               add++;
-            }
-            else
-            {
+            } else {
               clearInterval(open);
-              let reveal  = setInterval(showNumber, 30);
+              let reveal = setInterval(showNumber, 30);
               add = 0;
 
-              function  showNumber()
-              {
-                if(left_side.style.opacity < 0.9 && right_side.style.opacity < 0.9)
-                {
+              function showNumber() {
+                if (left_side.style.opacity < 0.9 && right_side.style.opacity < 0.9) {
                   left_side.style.opacity = 0 + '.' + add;
                   right_side.style.opacity = 0 + '.' + add;
                   add++;
-                }
-                else
-                {
+                } else {
                   clearInterval(reveal);
                 }
               }
@@ -128,21 +149,22 @@
     }
 
     //loginButton.onclick = function () {
-      //if (lastButton.style.display == "none") {
-        //lastButton.style.display = "block";
-        //firstButton.style.display = "block";
-        //submit.style.display = "block";
-      //}
-      //else {
-        //lastButton.style.display = "none";
-        //firstButton.style.display = "none";
-        //submit.style.display = "none";
-      //}
+    //if (lastButton.style.display == "none") {
+    //lastButton.style.display = "block";
+    //firstButton.style.display = "block";
+    //submit.style.display = "block";
+    //}
+    //else {
+    //lastButton.style.display = "none";
+    //firstButton.style.display = "none";
+    //submit.style.display = "none";
+    //}
     //}
 
     function wait(delayInMS) {
       return new Promise(resolve => setTimeout(resolve, delayInMS));
     }
+
     function startRecording(stream, lengthInMS) {
       let recorder = new MediaRecorder(stream);
       let data = [];
@@ -160,20 +182,23 @@
       );
 
       return Promise.all([
-        stopped,
-        recorded
-      ])
+          stopped,
+          recorded
+        ])
         .then(() => data);
     }
+
     function stop(stream) {
       stream.getTracks().forEach(track => track.stop());
     }
     startButton.addEventListener("click", function () {
       navigator.mediaDevices.getUserMedia(constraints).then(stream => {
-        preview.srcObject = stream;
-      }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+          preview.srcObject = stream;
+        }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
         .then(recordedChunks => {
-          let recordedBlob = new Blob(recordedChunks, { type: "audio/wav" });
+          let recordedBlob = new Blob(recordedChunks, {
+            type: "audio/wav"
+          });
           recording.src = URL.createObjectURL(recordedBlob);
           var a = document.createElement('a');
           document.body.appendChild(a);
@@ -184,84 +209,75 @@
           a.click();
           window.URL.revokeObjectURL(url);
         })
-    }, false);</script>
-<script>
+    }, false);
+  </script>
+  <script>
+    $(document).ready(function () {
+      $("#serv").on('click', function () {
+        $.ajax({
+          url: "/callme",
+          method: "GET",
+          success: function (data) {
+            stringParse(data);
 
+            function stringParse(command) {
+              console.log(command);
+              var com_array = command.split(":");
+              var command = com_array[0];
+              console.log(command[0]);
 
-  $(document).ready(function() {
-    $("#serv").on('click', function() {
-      $.ajax({
-        url: "/callme",
-        method: "GET",
-        success: function(data) {
-          stringParse(data);
-          function    stringParse(command){
-            console.log(command);
-            var com_array = command.split(":");
-            var command = com_array[0];
-            console.log(command[0]);
-            
-            console.log("Damn");
-            function  dispatchComm(comm)
-            {
-              if (comm == "Alarm")
-              {
-                $(".client-input").show();
-                $("#response").append('<li>'+ com_array[1] + '</li>');
-                var alarm_synth = window.speechSynthesis;
-                var alarm_speech = new SpeechSynthesisUtterance("Enter Alarm Time");
-                alarm_speech.lang = 'en-US';
-                alarm_synth.speak(alarm_speech);
-                $(".client-input").on('keyup', function (event) 
-                {
-                  if (event.keyCode == 13) 
-                  {
-                    user_input = parseInt($(".client-input").val());
-                    $(".client-input").val("");
-                    if (user_input > 59)
-                      user_input = 59;
-                    if (isNaN(user_input))
-                      {
-                        $("#response").append('<h1 class="error-mess" style="color: red;">'+ "ENTER A VALID NUMBER" + '</h1>');
-                        setTimeout(function() 
-                        { 
+              console.log("Damn");
+
+              function dispatchComm(comm) {
+                if (comm == "Alarm") {
+                  $(".client-input").show();
+                  $("#response").append('<li>' + com_array[1] + '</li>');
+                  var alarm_synth = window.speechSynthesis;
+                  var alarm_speech = new SpeechSynthesisUtterance("Enter Alarm Time");
+                  alarm_speech.lang = 'en-US';
+                  alarm_synth.speak(alarm_speech);
+                  $(".client-input").on('keyup', function (event) {
+                    if (event.keyCode == 13) {
+                      user_input = parseInt($(".client-input").val());
+                      $(".client-input").val("");
+                      if (user_input > 59)
+                        user_input = 59;
+                      if (isNaN(user_input)) {
+                        $("#response").append('<h1 class="error-mess" style="color: red;">' +
+                          "ENTER A VALID NUMBER" + '</h1>');
+                        setTimeout(function () {
                           let error_txt = document.querySelector("#response");
                           error_txt.removeChild(error_txt.lastChild);
                         }, 2000);
                       }
-                    console.log(user_input);
-                    //function openAlarm(user_input)
-                    //{}
-                  }
-                });
+                      console.log(user_input);
+                      //function openAlarm(user_input)
+                      //{}
+                    }
+                  });
+                } else if (comm == "Song") {
+                  $(".spotify-button").show();
+                  $("#response").append('<li>' + "Please Sign In First" + '</li>');
+                  var song_synth = window.speechSynthesis;
+                  var song_speech = new SpeechSynthesisUtterance("Sign In");
+                  song_speech.lang = 'en-US';
+                  song_synth.speak(song_speech);
+                } else {
+                  console.log("Shirt");
+                  $("#response").append('<li>' + com_array[1] + '</li>');
+                  var synth = window.speechSynthesis;
+                  var test = document.querySelector("#response").lastChild.innerHTML;
+                  var speech = new SpeechSynthesisUtterance(com_array[1]);
+                  speech.lang = 'en-US';
+                  synth.speak(speech);
+                }
               }
-              else if (comm == "Song")
-              {
-                $(".spotify-button").show();
-                $("#response").append('<li>'+ "Please Sign In First" + '</li>');
-                var song_synth = window.speechSynthesis;
-                var song_speech = new SpeechSynthesisUtterance("Sign In");
-                song_speech.lang = 'en-US';
-                song_synth.speak(song_speech);
-              }
-              else
-              {
-                console.log("Shirt");
-                $("#response").append('<li>'+ com_array[1] + '</li>');
-                var synth = window.speechSynthesis;
-                var test = document.querySelector("#response").lastChild.innerHTML;
-                var speech = new SpeechSynthesisUtterance(com_array[1]);
-                speech.lang = 'en-US';
-                synth.speak(speech);
-              }
+              dispatchComm(command);
             }
-            dispatchComm(command);
-          }
-        },
+          },
+        });
+      });
     });
-  });
-});
-
   </script>
   <style>
     #startButton {
@@ -358,7 +374,7 @@
       z-index: 1;
     }
 
-    #startButton:hover{
+    #startButton:hover {
       cursor: pointer;
     }
 
@@ -374,7 +390,7 @@
       height: 2em;
     }
 
-    #submit {
+    #connect {
       width: 150px;
       margin: 0 25%;
     }
@@ -392,13 +408,14 @@
       left: 43%;
     }
 
-    .bar-grow   {
+    .bar-grow {
       height: 2px;
       width: 1px;
       background-color: red;
       position: absolute;
     }
-    .left-side  {
+
+    .left-side {
       background-color: blue;
       opacity: 0.0;
       height: 100%;
@@ -406,7 +423,8 @@
       float: left;
       position: relative;
     }
-    .right-side  {
+
+    .right-side {
       background-color: green;
       opacity: 0.0;
       height: 100%;
@@ -414,20 +432,25 @@
       float: right;
       position: relative;
     }
-    .left-minute, .right-minute  {
+
+    .left-minute,
+    .right-minute {
       float: left
     }
-    .left-second, .right-second   {
+
+    .left-second,
+    .right-second {
       float: right;
     }
+
     .client-input {
       height: 30px;
       width: 38vw;
       overflow-y: scroll;
       overflow-x: hidden;
       box-shadow:
-      0 15px 30px 0 rgba(0,0,0,0.11),
-      0 15px 15px 0 rgba(0,0,0,0.08);
+        0 15px 30px 0 rgba(0, 0, 0, 0.11),
+        0 15px 15px 0 rgba(0, 0, 0, 0.08);
       position: absolute;
       top: 72%;
       left: 51%;
@@ -440,6 +463,7 @@
       color: white;
       border-radius: 18px;
     }
+
     .spotify-button {
       top: 72%;
       left: 66%;
@@ -449,8 +473,11 @@
     }
   </style>
   <img class="logo" src="logo1.png">
-      <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=f137e890f3734bd38fdcf1d980158139&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&redirect_uri=http://localhost:3000/oauth"><image class="spotify-button" src="Spotify_Logo_RGB_GREEN.png" style="width: auto; height: 35px; display: none;"></image>
-      </a>
+  <a
+    href="https://accounts.spotify.com/authorize?response_type=code&client_id=f137e890f3734bd38fdcf1d980158139&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&redirect_uri=http://localhost:3000/oauth">
+    <image class="spotify-button" src="Spotify_Logo_RGB_GREEN.png" style="width: auto; height: 35px; display: none;">
+    </image>
+  </a>
   <textarea class="client-input" style="display: none;"></textarea>
 </body>
 
