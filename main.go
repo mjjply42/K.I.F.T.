@@ -53,7 +53,7 @@ func main() {
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber()
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "Where is bobby"
+	testString := "Turn on light"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
@@ -63,6 +63,8 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 		"Play Music",
 		"Who is connected",
 		"Where is",
+		"Turn on light",
+		"Turn off light",
 		"List Commands",
 	}
 
@@ -109,9 +111,13 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 			} else if i == 6 {
 				log.Println(PrintConnected(UsersConnected))
 				fmt.Fprintln(res, PrintConnected(UsersConnected));
-			} else if i == 7 {
-				
 			} else if i == 8 {
+				log.Println("Turn on lights");
+				fmt.Fprintln(res, "lights: Turning on lights");
+			} else if i == 9 {
+				log.Println("Turn off lights");
+				fmt.Fprintln(res, "lights: Turning off lights");
+			} else if i == 10 {
 				log.Println((commands))
 				i := 0
 				for i < len(commands) {

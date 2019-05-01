@@ -221,14 +221,12 @@
             stringParse(data);
 
             function stringParse(command) {
-              console.log(command);
               var com_array = command.split(":");
               var command = com_array[0];
-              console.log(command[0]);
+              console.log(command);
+              console.log(com_array);
 
-              console.log("Damn");
-
-              function dispatchComm(comm) {
+              function dispatchComm(comm, content) {
                 if (comm == "Alarm") {
                   $(".client-input").show();
                   $("#response").append('<li>' + com_array[1] + '</li>');
@@ -262,6 +260,12 @@
                   var song_speech = new SpeechSynthesisUtterance("Sign In");
                   song_speech.lang = 'en-US';
                   song_synth.speak(song_speech);
+                } else if (comm == "lights") {
+                  if (content.substring(0,11).localeCompare(" Turning on") == 0) {
+                    $('#image').attr("src", "https://images.cooltext.com/5285731.png")
+                  } else {
+                      $('#image').attr("src", "logo1.png")
+                    }
                 } else {
                   console.log("Shirt");
                   $("#response").append('<li>' + com_array[1] + '</li>');
@@ -272,7 +276,7 @@
                   synth.speak(speech);
                 }
               }
-              dispatchComm(command);
+              dispatchComm(command, com_array[1]);
             }
           },
         });
@@ -472,7 +476,7 @@
       margin-left: -290px;
     }
   </style>
-  <img class="logo" src="logo1.png">
+  <img id="image" class="logo" src="logo1.png">
   <a
     href="https://accounts.spotify.com/authorize?response_type=code&client_id=f137e890f3734bd38fdcf1d980158139&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&redirect_uri=http://localhost:3000/oauth">
     <image class="spotify-button" src="Spotify_Logo_RGB_GREEN.png" style="width: auto; height: 35px; display: none;">
