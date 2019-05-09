@@ -82,7 +82,7 @@ int			main(int ac, char **av)
 	if (ac == 2)
 	{
 		utt = (char *)psphinx_string(av[1]);
-		printf("%s", utt);
+		ft_putstr(utt);
 		free(utt);
 	}
 	return (0);

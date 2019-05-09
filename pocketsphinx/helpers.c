@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "sphinx.h"
-#include "stdio.h"
+#include "unistd.h"
 
 size_t	ft_strlen(char const *str)
 {
@@ -34,4 +34,9 @@ char	*ft_strdup(char const *str)
 	while (len--)
 		new[len] = str[len];
 	return (new);
+}
+
+void	ft_putstr(char *s)
+{
+	write(1, s, ft_strlen(s));
 }
