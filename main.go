@@ -53,12 +53,12 @@ func main() {
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber()
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "Turn on light"
+	testString := "Search dictionary for fighter"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
 		"Send Email",
-		"Search dictionary for term",
+		"Search dictionary for",
 		"Set Alarm",
 		"Play Music",
 		"Who is connected",
@@ -75,14 +75,21 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 
 	//if string is equal to command
 	for i := 0; i < len(commands); i++ {
-		if (i == 7) {
+		if (i == 3) {
+			log.Println(testString[0:21])
+			log.Println(commands[i])
+			if (len(testString) > 22 && strings.Compare(testString[0:21], commands[i]) == 0) {
+				flag = 1
+				log.Println(com.SearchTerm(testString[22:]))
+				fmt.Fprintln(res, com.SearchTerm(testString[22:]))
+			}
+		} else if (i == 7) {
 			if (len(testString) > 8 && strings.Compare(testString[0:8], commands[i]) == 0) {
 				flag = 1
 				//find username with rest of string
 				log.Println(testString[9:]);
 				log.Println(findLocation(testString[9:]));
 				fmt.Fprintln(res, findLocation(testString[9:]))
-
 			}
 		} else if strings.Compare(testString, commands[i]) == 0 {
 			log.Println(commands[i])
