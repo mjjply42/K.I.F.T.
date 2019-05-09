@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   sphinx.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dromansk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 21:45:14 by dromansk          #+#    #+#             */
-/*   Updated: 2019/04/05 16:12:22 by dromansk         ###   ########.fr       */
+/*   Updated: 2019/05/08 19:38:08 by dromansk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pocketsphinx.h>
+#include "sphinx.h"
 
 /*
 ** Main included so we can compile it and use it as an outside program.
 ** However I have structured the code so you can just call psphinx_string
 ** to get your desired output string from the function directly.
-** 
-** The version of pocketsphinx you need to have installed to make this work
-** is all set up in the make file so you should be able to run 'make install'
-** to get the proper version. The flags necessary for compilation are all laid
-** out in the make file as well.
 */
 
 char const	*parse_input(ps_decoder_t *reading, FILE *file, int *score)
@@ -47,8 +43,9 @@ char const	*pocketsphinx_string(char *path, cmd_ln_t *config)
 	int				score;
 
 	parsing = ps_init(config);
-	file = fopen(path, "rb");
-	utt = parse_input(parsing, file, &score);
+	if (!(file = fopen(path, "rb")))
+		return (NULL);
+	utt = ft_strdup(parse_input(parsing, file, &score));
 	fclose(file);
 	ps_free(parsing);
 	return (utt);
@@ -59,9 +56,9 @@ cmd_ln_t	*psphinx_config(void)
 	cmd_ln_t		*config;
 
 	config = cmd_ln_init(NULL, ps_args(), TRUE,
-				"-hmm", MODELDIR "/en-us/en-us",
-				"-lm", MODELDIR "/en-us/en-us.lm.bin",
-				"-dict", MODELDIR "/en-us/cmudict-en-us.dict",
+				"-hmm", "./en-us/en-us-adapt",
+				"-lm", "./en-us/en-us.lm.bin",
+				"-dict", "./en-us/cmudict-en-us.dict",
 				"-logfn", "/dev/null", NULL);
 	return (config);
 }
@@ -79,7 +76,14 @@ char const	*psphinx_string(char *path)
 
 int			main(int ac, char **av)
 {
+	char	*utt;
+
+	utt = NULL;
 	if (ac == 2)
-		printf("%s", psphinx_string(av[1]));
+	{
+		utt = (char *)psphinx_string(av[1]);
+		printf("%s", utt);
+		free(utt);
+	}
 	return (0);
 }
