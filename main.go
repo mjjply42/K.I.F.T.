@@ -99,7 +99,7 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 				fmt.Fprintln(res, com.GetEvents("fremont"))
 			} else if i == 2 {
 				message := "HELLO This is from kift"
-				who := "lauracmalagon@gmail.com"
+				who := "stsong42@gmail.com"
 				value := com.SendEmail(message, who)
 				log.Println(value)
 				fmt.Fprintln(res, value)
