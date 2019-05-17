@@ -17,5 +17,6 @@
 
 size_t	ft_strlen(char const *str);
 char	*ft_strdup(char const *str);
+void	ft_putstr(char *s);
 
 #endif
