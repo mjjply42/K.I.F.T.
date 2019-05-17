@@ -53,7 +53,7 @@ func main() {
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber()
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "Search dictionary for fighter"
+	testString := "Get me the weather"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
@@ -76,8 +76,6 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 	//if string is equal to command
 	for i := 0; i < len(commands); i++ {
 		if (i == 3) {
-			log.Println(testString[0:21])
-			log.Println(commands[i])
 			if (len(testString) > 22 && strings.Compare(testString[0:21], commands[i]) == 0) {
 				flag = 1
 				log.Println(com.SearchTerm(testString[22:]))
