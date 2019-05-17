@@ -49,7 +49,7 @@ func GetWeather(city string) string {
 
 	var m WeatherData
 	err = json.Unmarshal(body, &m)
-	return fmt.Sprintf("Weather: The temperature in %s is %.2f degrees farenheit and it is %s.\n", city, m.Main.Temp, m.Weather[0].Description)
+	return fmt.Sprintf("Weather; The temperature in %s is %.2f degrees farenheit and it is %s.\n", city, m.Main.Temp, m.Weather[0].Description)
 }
 
 func GetEvents(city string) string {
@@ -75,7 +75,7 @@ func GetEvents(city string) string {
 	var m EventInfo
 	err = json.Unmarshal(body, &m)
 	// maybe go through a few of the events on the list and concatenate to the string
-	var response = "Event: Here are 3 events nearby.\n"
+	var response = "Event; Here are 3 events nearby.\n"
 	var i = 0
 	for i < 3 {
 		response += m.Events.Event[i].URL + "\n"
@@ -97,12 +97,12 @@ func SearchTerm(term string) string {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		return ("Error: Error during search. Try again")
+		return ("Error; Error during search. Try again")
 	}
 	//Grab the body from response
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return ("Error: Error during search. Try again")
+		return ("Error; Error during search. Try again")
 	}
 
 	type Definition struct {
@@ -154,7 +154,7 @@ func SearchTerm(term string) string {
 	var m Definition
 	err = json.Unmarshal(body, &m)
 
-	var response = fmt.Sprintf("Define: A %s is %s\n", term, m.Results[0].LexicalEntries[0].Entries[0].Senses[0].Definitions[0])
+	var response = fmt.Sprintf("Define; A %s is %s\n", term, m.Results[0].LexicalEntries[0].Entries[0].Senses[0].Definitions[0])
 	return response
 }
 
@@ -166,14 +166,14 @@ func SendEmail(message string, who string) string {
 	cmd := exec.Command("python", "./PyCommands/command_email.py", message, who, username, passwd)
 	err := cmd.Run()
 	if err != nil {
-		return fmt.Sprintf("Error: Command finished with error: %v", err)
+		return fmt.Sprintf("Error; Command finished with error: %v", err)
 	}
-	return fmt.Sprintf("Email: Message Sent")
+	return fmt.Sprintf("Email; Message Sent")
 }
 
 func PlayMusic(accessToken string) string {
 	if accessToken == "" {
-		return "Song: Log in first. Repeat command."
+		return "Song; Log in first. Repeat command."
 	}
 
 	//get available devices
@@ -182,13 +182,13 @@ func PlayMusic(accessToken string) string {
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))
 	resp, err := client.Do(req)
 	if err != nil {
-		return ("Error: Error during music play. Try again")
+		return ("Error; Error during music play. Try again")
 	}
 
 	//Grab the body from response
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return ("Error: Error during music play. Try again")
+		return ("Error; Error during music play. Try again")
 	}
 
 	type connectedDevices struct {
@@ -209,16 +209,16 @@ func PlayMusic(accessToken string) string {
 
 	//if length of devices equal to zero
 	if len(m.Devices) == 0 {
-		return "Error: Please open a device"
+		return "Error; Please open a device"
 	}
 
 	//construct url
 	url := fmt.Sprintf("https://api.spotify.com/v1/me/player/play?device_id=%s", m.Devices[0].ID)
 	fmt.Println(url)
 	if PlayMusicHelper(url, accessToken) == 0 {
-		return "Error: Error playing music"
+		return "Error; Error playing music"
 	}
-	return "Success: Music now playing"
+	return "Success; Music now playing"
 }
 
 func PlayMusicHelper(url string, accessToken string) int {

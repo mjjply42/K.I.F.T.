@@ -52,7 +52,7 @@ func main() {
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber()
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "Events near me"
+	testString := "List Commands"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
@@ -107,8 +107,8 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 				log.Println(com.SearchTerm("word"))
 				fmt.Fprintln(res, com.SearchTerm("word"))
 			} else if i == 4 {
-				log.Println("Alarm: Enter Alarm Time in minutes (MAX 59)")
-				fmt.Fprintln(res, ("Alarm: Enter Alarm Time in minutes (MAX 59)"))
+				log.Println("Alarm; Enter Alarm Time in minutes (MAX 59)")
+				fmt.Fprintln(res, ("Alarm; Enter Alarm Time in minutes (MAX 59)"))
 			} else if i == 5 {
 				log.Println(com.PlayMusic(AccessToken))
 				fmt.Fprintln(res, com.PlayMusic(AccessToken))
@@ -117,13 +117,14 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 				fmt.Fprintln(res, PrintConnected(UsersConnected))
 			} else if i == 8 {
 				log.Println("Turn on lights")
-				fmt.Fprintln(res, "lights: Turning on lights")
+				fmt.Fprintln(res, "lights; Turning on lights")
 			} else if i == 9 {
 				log.Println("Turn off lights")
-				fmt.Fprintln(res, "lights: Turning off lights")
+				fmt.Fprintln(res, "lights; Turning off lights")
 			} else if i == 10 {
 				log.Println((commands))
 				i := 0
+				fmt.Fprintln(res, "List Commands;")
 				for i < len(commands) {
 					fmt.Fprintln(res, (commands[i]))
 					fmt.Fprintf(res, "-------------")
@@ -261,10 +262,10 @@ func PrintSlice(s []user_struct) {
 }
 
 func findLocation(username string) string {
-	var location = "Location: No user found"
+	var location = "Location; No user found"
 	for i := 0; i < len(UsersConnected); i++ {
 		if UsersConnected[i].Username == username {
-			location = fmt.Sprintf("Location: Location is %s\n", UsersConnected[i].Location)
+			location = fmt.Sprintf("Location; Location is %s\n", UsersConnected[i].Location)
 		}
 	}
 	return location
@@ -275,5 +276,5 @@ func PrintConnected(s []user_struct) string {
 	}
 	var who = fmt.Sprintf("%+v\n", s)
 	who = strings.Replace(who, ":", "=>", -1)
-	return fmt.Sprintf("Who: %s\n", who)
+	return fmt.Sprintf("Who; %s\n", who)
 }
