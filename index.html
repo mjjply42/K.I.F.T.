@@ -218,10 +218,11 @@
           url: "/callme",
           method: "GET",
           success: function (data) {
+            console.log(data)
             stringParse(data);
 
             function stringParse(command) {
-              var com_array = command.split(":");
+              var com_array = command.split(";");
               var command = com_array[0];
               console.log(command);
               console.log(com_array);

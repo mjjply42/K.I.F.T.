@@ -44,7 +44,6 @@ func main() {
 	http.HandleFunc("/oauth", oauthTokenHandler)
 	http.HandleFunc("/users", usersHandler)
 
-
 	//Listen and serve connections
 	fmt.Println("Server Running...")
 	http.ListenAndServe(fmt.Sprintf("%s:%d", serverHost, serverPort), nil)
@@ -53,7 +52,7 @@ func main() {
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber()
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "Get me the weather"
+	testString := "Events near me"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
@@ -75,18 +74,18 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 
 	//if string is equal to command
 	for i := 0; i < len(commands); i++ {
-		if (i == 3) {
-			if (len(testString) > 22 && strings.Compare(testString[0:21], commands[i]) == 0) {
+		if i == 3 {
+			if len(testString) > 22 && strings.Compare(testString[0:21], commands[i]) == 0 {
 				flag = 1
 				log.Println(com.SearchTerm(testString[22:]))
 				fmt.Fprintln(res, com.SearchTerm(testString[22:]))
 			}
-		} else if (i == 7) {
-			if (len(testString) > 8 && strings.Compare(testString[0:8], commands[i]) == 0) {
+		} else if i == 7 {
+			if len(testString) > 8 && strings.Compare(testString[0:8], commands[i]) == 0 {
 				flag = 1
 				//find username with rest of string
-				log.Println(testString[9:]);
-				log.Println(findLocation(testString[9:]));
+				log.Println(testString[9:])
+				log.Println(findLocation(testString[9:]))
 				fmt.Fprintln(res, findLocation(testString[9:]))
 			}
 		} else if strings.Compare(testString, commands[i]) == 0 {
@@ -115,13 +114,13 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 				fmt.Fprintln(res, com.PlayMusic(AccessToken))
 			} else if i == 6 {
 				log.Println(PrintConnected(UsersConnected))
-				fmt.Fprintln(res, PrintConnected(UsersConnected));
+				fmt.Fprintln(res, PrintConnected(UsersConnected))
 			} else if i == 8 {
-				log.Println("Turn on lights");
-				fmt.Fprintln(res, "lights: Turning on lights");
+				log.Println("Turn on lights")
+				fmt.Fprintln(res, "lights: Turning on lights")
 			} else if i == 9 {
-				log.Println("Turn off lights");
-				fmt.Fprintln(res, "lights: Turning off lights");
+				log.Println("Turn off lights")
+				fmt.Fprintln(res, "lights: Turning off lights")
 			} else if i == 10 {
 				log.Println((commands))
 				i := 0
@@ -231,7 +230,7 @@ type user_struct struct {
 	Location string
 }
 
-func usersHandler(w http.ResponseWriter, r *http.Request){
+func usersHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "POST":
 		body, err := ioutil.ReadAll(r.Body)
@@ -246,35 +245,35 @@ func usersHandler(w http.ResponseWriter, r *http.Request){
 		}
 		log.Println("HERE ", t.Location)
 		//ADD THE struct to UsersConnected ARRAY
-		UsersConnected = append(UsersConnected, t);
+		UsersConnected = append(UsersConnected, t)
 		PrintSlice(UsersConnected)
-		
+
 	default:
 		fmt.Fprintf(w, "Only Post request method is supported")
 	}
 
-    fmt.Fprintf(w, "Welcome to the users!")
-    fmt.Println("Endpoint Hit: users")
+	fmt.Fprintf(w, "Welcome to the users!")
+	fmt.Println("Endpoint Hit: users")
 }
 
 func PrintSlice(s []user_struct) {
 	fmt.Printf("len=%d cap=%d %+v\n", len(s), cap(s), s)
 }
 
-func findLocation(username string) string{
+func findLocation(username string) string {
 	var location = "Location: No user found"
 	for i := 0; i < len(UsersConnected); i++ {
-		if (UsersConnected[i].Username == username) {
-			location = fmt.Sprintf("Location: Location is %s\n", UsersConnected[i].Location);
+		if UsersConnected[i].Username == username {
+			location = fmt.Sprintf("Location: Location is %s\n", UsersConnected[i].Location)
 		}
 	}
 	return location
 }
 func PrintConnected(s []user_struct) string {
-	if (len(s) == 0) {
+	if len(s) == 0 {
 		return (fmt.Sprintf("%s\n", "Who: No Users Connected!"))
 	}
 	var who = fmt.Sprintf("%+v\n", s)
 	who = strings.Replace(who, ":", "=>", -1)
-	return fmt.Sprintf("Who: %s\n", who);
+	return fmt.Sprintf("Who: %s\n", who)
 }
