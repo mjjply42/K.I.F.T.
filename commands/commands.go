@@ -54,7 +54,7 @@ func GetWeather(city string) string {
 
 func GetEvents(city string) string {
 	//use api.eventful.com for this one
-	url := fmt.Sprintf("http://api.eventful.com/json/events/search?...&keywords=books&location=%s&date=Future&within=10&app_key=nDJFtjJmt4pt4WjP", city)
+	url := fmt.Sprintf("http://api.eventful.com/json/events/search?...&keywords=fun&location=%s&date=Future&within=10&app_key=nDJFtjJmt4pt4WjP", city)
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatalln(err)
@@ -69,6 +69,7 @@ func GetEvents(city string) string {
 		Events struct {
 			Event []struct {
 				URL string `json:"url"`
+				Title         string      `json:"title"`
 			} `json:"event"`
 		} `json:"events"`
 	}
@@ -78,7 +79,8 @@ func GetEvents(city string) string {
 	var response = "Event; Here are 3 events nearby.\n"
 	var i = 0
 	for i < 3 {
-		response += m.Events.Event[i].URL + "\n"
+		response += m.Events.Event[i].Title + "\n"
+		response += "------------- \n"
 		i++
 	}
 	return response

@@ -52,7 +52,7 @@ func main() {
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber()
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "List Commands"
+	testString := "Events near me"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
@@ -95,8 +95,8 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 				log.Println(com.GetWeather("Union City"))
 				fmt.Fprintln(res, com.GetWeather("Union City"))
 			} else if i == 1 {
-				log.Println(com.GetEvents("fremont"))
-				fmt.Fprintln(res, com.GetEvents("fremont"))
+				log.Println(com.GetEvents("Fremont"))
+				fmt.Fprintln(res, com.GetEvents("Fremont"))
 			} else if i == 2 {
 				message := "HELLO This is from kift"
 				who := "stsong42@gmail.com"
