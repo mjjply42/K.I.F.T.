@@ -57,10 +57,10 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 	file, _, err := req.FormFile("file")
 	defer file.Close()
 	fileBytes, err := ioutil.ReadAll(file)
-	if err == nil {
-		log.Println("GReat Shit")
+	if err != nil {
+		log.Println(err)
+		return
 	}
-
 	filetype := http.DetectContentType(fileBytes)
 	log.Println(filetype)
 

@@ -144,7 +144,7 @@
     }
 
     function startRecording(stream, lengthInMS) {
-      let recorder = new MediaRecorder(stream);
+      let recorder = new MediaRecorder(stream, options);
       let data = [];
 
       recorder.ondataavailable = event => data.push(event.data);
