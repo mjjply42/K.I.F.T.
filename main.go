@@ -1,8 +1,10 @@
 package main
 
 //#include "test.h"
-//#include "printNumber.c"
-//#include <stdlib.h>
+/*
+#include "printNumber.c"
+#include <stdlib.h>
+*/
 import "C"
 import (
 	b64 "encoding/base64"
@@ -15,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 
 	com "./commands"
@@ -40,7 +43,7 @@ func main() {
 
 	//define endpoints
 	http.HandleFunc("/", handler)
-	http.HandleFunc("/callme", commandhandler)
+	http.HandleFunc("/command", commandhandler)
 	http.HandleFunc("/oauth", oauthTokenHandler)
 	http.HandleFunc("/users", usersHandler)
 
@@ -50,7 +53,16 @@ func main() {
 }
 
 func commandhandler(res http.ResponseWriter, req *http.Request) {
-	// Cstring := C.printNumber()
+	// Cstring := C.printNumber(number)
+	var test string
+	var number int
+	test = req.FormValue("number")
+	if s, err := strconv.Atoi(test); err == nil {
+		number = s
+	}
+	var num = (C.int(number))
+	log.Println(C.printNumber(num))
+
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
 	testString := "Events near me"
 	var commands = []string{

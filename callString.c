@@ -1,5 +1,6 @@
+#include <stdio.h>
 
-char*   callString()
+int   callString(int number)
 {
-    return ("Yo top");
+    return (printf("%i\n", number + 15));
 }

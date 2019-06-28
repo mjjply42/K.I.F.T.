@@ -1,6 +1,6 @@
 #include "callString.c"
 
-char* printNumber()
+int printNumber(int number)
 {
-    return (callString());
+    return (callString(number));
 }
