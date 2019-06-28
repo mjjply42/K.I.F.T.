@@ -187,11 +187,18 @@
           a.click();
           window.URL.revokeObjectURL(url);
 
-        let fd = 100;
+        let file = recordedBlob;
+        let fr = new FileReader();
+        fr.readAsArrayBuffer(file);
+        var fd = new FormData();
+        fd.append("file", file);
+        fd.append("name", "Kift_audio");
         $.ajax({
           url: "/command",
           method: "POST",
-          data: {"number":fd},
+          data :fd,
+          processData: false,
+          contentType: false,
           success: function (data) {
             console.log(data)
             stringParse(data);

@@ -17,7 +17,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"strconv"
 	"strings"
 
 	com "./commands"
@@ -54,14 +53,16 @@ func main() {
 
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 	// Cstring := C.printNumber(number)
-	var test string
-	var number int
-	test = req.FormValue("number")
-	if s, err := strconv.Atoi(test); err == nil {
-		number = s
+
+	file, _, err := req.FormFile("file")
+	defer file.Close()
+	fileBytes, err := ioutil.ReadAll(file)
+	if err == nil {
+		log.Println("GReat Shit")
 	}
-	var num = (C.int(number))
-	log.Println(C.printNumber(num))
+
+	filetype := http.DetectContentType(fileBytes)
+	log.Println(filetype)
 
 	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
 	testString := "Events near me"
