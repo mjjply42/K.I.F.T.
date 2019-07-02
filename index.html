@@ -89,8 +89,8 @@
     ////////////////////////////////////////////////////////////////
     let spotify_butt = document.querySelector(".spotify-button");
     const constraints = {
-      audio: true,
-      sampleRate:16000,
+      audio: {
+        sampleRate:16000},
       video: false
     };
 
@@ -144,7 +144,8 @@
     }
 
     function startRecording(stream, lengthInMS) {
-      let recorder = new MediaRecorder(stream, options);
+      var options = {mimeType: 'audio/webm'};
+      let recorder = new MediaRecorder(stream,options);
       let data = [];
 
       recorder.ondataavailable = event => data.push(event.data);
@@ -175,7 +176,7 @@
         }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
         .then(recordedChunks => {
           let recordedBlob = new Blob(recordedChunks, {
-            type: "audio/wav"
+            'type' : 'audio/wav; codecs=MS_PCM'
           });
           recording.src = URL.createObjectURL(recordedBlob);
           var a = document.createElement('a');
@@ -186,13 +187,10 @@
           a.download = 'request.wav';
           a.click();
           window.URL.revokeObjectURL(url);
-
-        let file = recordedBlob;
-        let fr = new FileReader();
-        fr.readAsArrayBuffer(file);
+          console.log(recordedBlob.type);
+        let file = new File([recordedBlob], "request.wav",{ type : 'audio/wav; codecs=MS_PCM'});
         var fd = new FormData();
-        fd.append("file", file);
-        fd.append("name", "Kift_audio");
+        fd.append("file", file, "request.wav");
         $.ajax({
           url: "/command",
           method: "POST",
