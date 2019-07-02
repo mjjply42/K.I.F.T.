@@ -1,8 +1,6 @@
 package main
 
-//#include "test.h"
 /*
-#include "printNumber.c"
 #include <stdlib.h>
 */
 import "C"
@@ -17,6 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"os/exec"
 	"strings"
 
 	com "./commands"
@@ -52,20 +51,15 @@ func main() {
 }
 
 func commandhandler(res http.ResponseWriter, req *http.Request) {
-	// Cstring := C.printNumber(number)
 
-	file, _, err := req.FormFile("file")
-	defer file.Close()
-	fileBytes, err := ioutil.ReadAll(file)
+	out, err := exec.Command("./psphinx").Output()
 	if err != nil {
-		log.Println(err)
-		return
+		fmt.Printf("Dammit %s\n", err)
 	}
-	filetype := http.DetectContentType(fileBytes)
-	log.Println(filetype)
+	check := string(out)
+	log.Println(check)
 
-	//Cstring:= C.pocketsphinx_continuous("~/Downloads/request.wav")
-	testString := "Events near me"
+	testString := check
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",

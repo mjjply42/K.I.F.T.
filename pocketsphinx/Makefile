@@ -11,12 +11,13 @@ all: $(NAME)
 
 $(NAME):
 	gcc $(I) $(SRCS) $(SFLAGS) -o $(NAME)
+	mv $(NAME) ../$(NAME)
 
 debug:
 	gcc $(I) $(SRCS) $(SFLAGS) -o $(NAME) -fsanitize=address -g
 
 re:
-	rm $(NAME)
+	rm ../$(NAME)
 	make all
 
 setup:
@@ -26,4 +27,4 @@ setup:
 	brew install --HEAD watsonbox/cmu-sphinx/cmu-pocketsphinx
 
 fclean:
-	rm $(NAME)
+	rm ../$(NAME)

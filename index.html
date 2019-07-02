@@ -193,10 +193,7 @@
         fd.append("file", file, "request.wav");
         $.ajax({
           url: "/command",
-          method: "POST",
-          data :fd,
-          processData: false,
-          contentType: false,
+          method: "GET",
           success: function (data) {
             console.log(data)
             stringParse(data);

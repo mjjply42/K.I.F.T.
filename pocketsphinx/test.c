@@ -20,23 +20,22 @@ char const *decoded_speech;
 
 int main(int argc, char *argv[]) {
 
-
     config = cmd_ln_init(NULL, ps_args(), TRUE,                 // Load the configuration structure - ps_args() passes the default values
-                "-hmm", "./en-us/en-us-adapt",                  // path to the standard english language model
-                "-lm", "./en-us/en-us.lm.bin",                  // custom language model (file must be present)
-                "-dict", "./en-us/cmudict-en-us.dict",          // custom dictionary (file must be present)
+                "-hmm", "./pocketsphinx/en-us/en-us-adapt",                  // path to the standard english language model
+                "-lm", "./pocketsphinx/en-us/en-us.lm.bin",                  // custom language model (file must be present)
+                "-dict", "./pocketsphinx/en-us/cmudict-en-us.dict",          // custom dictionary (file must be present)
                 "-logfn", "/dev/null", NULL);                   // suppress log info from being sent to screen
 
     ps = ps_init(config);                                                        // initialize the pocketsphinx decoder
     ad = ad_open_dev("sysdefault", (int) cmd_ln_float32_r(config, "-samprate")); // open default microphone at default samplerate
-
     while(1)
     {                                                                   
         decoded_speech = recognize_from_microphone();                 // call the function to capture and decode speech           
-        printf("You Said: %s\n", decoded_speech);                               // send decoded speech to screen
+        printf("%s\n", decoded_speech);                            // send decoded speech to screen
         break;
     }
-    ad_close(ad);                                                    // close the microphone
+    ad_close(ad);                                                   // close the microphone
+    return (1);
 }
 
 const char * recognize_from_microphone(){
@@ -64,5 +63,4 @@ const char * recognize_from_microphone(){
             break;                                   // exit the while loop and return to main
     }
    }
-
 }
