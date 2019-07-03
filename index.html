@@ -139,58 +139,9 @@
 
     }
 
-    function wait(delayInMS) {
-      return new Promise(resolve => setTimeout(resolve, delayInMS));
-    }
-
-    function startRecording(stream, lengthInMS) {
-      var options = {mimeType: 'audio/webm'};
-      let recorder = new MediaRecorder(stream,options);
-      let data = [];
-
-      recorder.ondataavailable = event => data.push(event.data);
-      recorder.start();
-
-      let stopped = new Promise((resolve, reject) => {
-        recorder.onstop = resolve;
-        recorder.onerror = event => reject(event.name);
-      });
-
-      let recorded = wait(lengthInMS).then(
-        () => recorder.state == "recording" && recorder.stop()
-      );
-
-      return Promise.all([
-          stopped,
-          recorded
-        ])
-        .then(() => data);
-    }
-
-    function stop(stream) {
-      stream.getTracks().forEach(track => track.stop());
-    }
+    
     startButton.addEventListener("click", function () {
-      navigator.mediaDevices.getUserMedia(constraints).then(stream => {
-          preview.srcObject = stream;
-        }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
-        .then(recordedChunks => {
-          let recordedBlob = new Blob(recordedChunks, {
-            'type' : 'audio/wav; codecs=MS_PCM'
-          });
-          recording.src = URL.createObjectURL(recordedBlob);
-          var a = document.createElement('a');
-          document.body.appendChild(a);
-          a.style = 'display:none';
-          var url = window.URL.createObjectURL(recordedBlob);
-          a.href = url;
-          a.download = 'request.wav';
-          a.click();
-          window.URL.revokeObjectURL(url);
-          console.log(recordedBlob.type);
-        let file = new File([recordedBlob], "request.wav",{ type : 'audio/wav; codecs=MS_PCM'});
-        var fd = new FormData();
-        fd.append("file", file, "request.wav");
+      
         $.ajax({
           url: "/command",
           method: "GET",
@@ -259,7 +210,6 @@
           },
         });
         })
-    }, false);
   </script>
   <script>
     

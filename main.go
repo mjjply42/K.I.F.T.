@@ -54,10 +54,11 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 
 	out, err := exec.Command("./psphinx").Output()
 	if err != nil {
-		fmt.Printf("Dammit %s\n", err)
+		log.Printf("%s\n", err)
 	}
 	check := string(out)
 	log.Println(check)
+	fmt.Fprintln(res, check)
 
 	testString := check
 	var commands = []string{
