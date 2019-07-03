@@ -24,7 +24,7 @@ import (
 //var serverDirectory string
 var serverPort int
 var serverHost string
-var tmpl = template.Must(template.New("tmpl").ParseFiles("index.html"))
+var tmpl = template.Must(template.New("tmpl").ParseFiles("./static/index.html"))
 var history string
 var HistoryCounter int = 1
 var SpotifyClientID = "f137e890f3734bd38fdcf1d980158139"
@@ -40,7 +40,10 @@ func main() {
 	flag.Parse()
 
 	//define endpoints
-	http.HandleFunc("/", handler)
+	//http.HandleFunc("/", handler)
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/", fs)
+
 	http.HandleFunc("/command", commandhandler)
 	http.HandleFunc("/oauth", oauthTokenHandler)
 	http.HandleFunc("/users", usersHandler)

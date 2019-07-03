@@ -1,0 +1,191 @@
+#startButton {
+    background-color: blue;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 10px;
+    margin-left: -50px;
+  }
+
+  li {
+    list-style-type: none;
+  }
+
+  #stopButton {
+    background-color: red;
+    color: white;
+  }
+
+  body {
+    width: 100vw;
+    height: 100vh;
+    font-family: "lato", sans-serif;
+    color: #E8AFE1;
+    background: #ad1283;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #ad1283 0%, #8f45d8 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #ad1283 0%, #8f45d8 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #ad1283 0%, #8f45d8 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ad1283', endColorstr='#8f45d8', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+  }
+
+  .logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    margin-top: -250px;
+    margin-left: -170px;
+  }
+
+  .scroll-box {
+    height: 150px;
+    width: 40vw;
+    overflow-y: scroll;
+    box-shadow:
+      0 15px 30px 0 rgba(0, 0, 0, 0.11),
+      0 15px 15px 0 rgba(0, 0, 0, 0.08);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 60px;
+    margin-left: -290px;
+  }
+
+  .prev {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 230px;
+    margin-left: -30px;
+  }
+
+  #recording {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 270px;
+    margin-left: -150px;
+  }
+
+  #startButton {
+    width: 40rem;
+    padding: .5rem 1rem;
+    margin: 0 1rem 1rem;
+    background: #5fb3b3;
+    border: none;
+    border-radius: .5rem;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -30px;
+    margin-left: -325px;
+    z-index: 1;
+  }
+
+  #startButton:hover {
+    cursor: pointer;
+  }
+
+  .user-field {
+    height: 100px;
+    width: 500px;
+    position: absolute;
+    left: 32%;
+  }
+
+  .user-field input {
+    width: 40%;
+    height: 2em;
+  }
+
+  #connect {
+    width: 150px;
+    margin: 0 25%;
+  }
+
+  #first {
+    float: left;
+  }
+
+  #last {
+    float: right;
+  }
+
+  #login {
+    position: absolute;
+    left: 43%;
+  }
+
+  .bar-grow {
+    height: 2px;
+    width: 1px;
+    background-color: red;
+    position: absolute;
+  }
+
+  .left-side {
+    background-color: blue;
+    opacity: 0.0;
+    height: 100%;
+    width: 40%;
+    float: left;
+    position: relative;
+  }
+
+  .right-side {
+    background-color: green;
+    opacity: 0.0;
+    height: 100%;
+    width: 40%;
+    float: right;
+    position: relative;
+  }
+
+  .left-minute,
+  .right-minute {
+    float: left
+  }
+
+  .left-second,
+  .right-second {
+    float: right;
+  }
+
+  .client-input {
+    height: 30px;
+    width: 38vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow:
+      0 15px 30px 0 rgba(0, 0, 0, 0.11),
+      0 15px 15px 0 rgba(0, 0, 0, 0.08);
+    position: absolute;
+    top: 72%;
+    left: 51%;
+    margin-top: 60px;
+    margin-left: -290px;
+    border-style: none;
+    background-color: #2d2d2d;
+    opacity: 0.3;
+    font-size: 18px;
+    color: white;
+    border-radius: 18px;
+  }
+
+  .spotify-button {
+    top: 72%;
+    left: 66%;
+    position: absolute;
+    margin-top: 60px;
+    margin-left: -290px;
+  }
