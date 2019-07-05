@@ -11,6 +11,7 @@
       e.preventDefault();
     });
     function openAlarm(time) {
+      console.log("pibidy");
       let add = 0;
       right_min.textContent = parseInt(time % 10);
       time /= 10;
@@ -54,6 +55,7 @@
 
     function  countdown()
     {
+      console.log("pooidy");
         let alarmy = setInterval(runAlarm,1000);
         function  runAlarm()
         {
@@ -92,6 +94,34 @@
                 clearInterval(fade_out);
                 let state_set = document.querySelector(".alarm");
                 state_set.id = "inactive";
+                
+                let item = document.querySelector(".bar-grow");
+                item.parentNode.removeChild(item);
+
+                let div = document.createElement("div");
+                let div1 = document.createElement("div");
+                let div2 = document.createElement("div");
+                let h1 = document.createElement("h1");
+                let h2 = document.createElement("h1");
+                let h3 = document.createElement("h1");
+                let h4 = document.createElement("h1");
+
+                div.className = "bar-grow";
+                div1.className = "left-side";
+                div2.className = "right-side";
+                h1.className = "left-minute";
+                h2.className = "left-second";
+                h3.className = "right-minute";
+                h4.className = "right-second";
+
+                document.querySelector(".clock").appendChild(div);
+                document.querySelector(".bar-grow").appendChild(div1);
+                document.querySelector(".bar-grow").appendChild(div2);
+                document.querySelector(".left-side").appendChild(h1);
+                document.querySelector(".left-side").appendChild(h2);
+                document.querySelector(".right-side").appendChild(h3);
+                document.querySelector(".right-side").appendChild(h4);
+                
                 return ;
               }
           }
@@ -115,12 +145,16 @@
       $(".client-input").on('keyup', function (event) {
         if (event.keyCode == 13) {
           user_input = parseInt($(".client-input").val());
-          $(".client-input").val("");
+          var item = document.querySelector(".client-input");
+          item.parentNode.removeChild(item);
+          var text = document.createElement("textarea");
+          text.className = "client-input";
+          text.style.display = "none";
+          document.body.appendChild(text);
           $(".client-input").hide();
           if (user_input > 59)
             user_input = 59;
           if (isNaN(user_input)) {
-            console.log(user_input);
             $("#response").append('<h1 class="error-mess" style="color: red;">' +
               "ENTER A VALID NUMBER" + '</h1>');
             setTimeout(function () {
@@ -128,6 +162,7 @@
               error_txt.removeChild(error_txt.lastChild);
             }, 2000);
           }
+          console.log(user_input);
           openAlarm(user_input)
           return ;
         }
