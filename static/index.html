@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
   <title>KIFT</title>
@@ -19,14 +18,12 @@
     </div>
   </div>
   <p id="notification" style="display: none"></p>
-
   <div class="left">
     <button id="startButton" class="button">
       Record
     </button>
   </div>
-  <div class="right">
-  </div>
+  <div class="right"></div>
   <div class="bottom">
     <pre id="log"></pre>
   </div>
@@ -35,16 +32,18 @@
   </div>
   </form>
 </head>
-
 <body>
-  <script src="command.js"></script>
-  <img id="image" class="logo" src="logo1.png">
-  <a
-    href="https://accounts.spotify.com/authorize?response_type=code&client_id=f137e890f3734bd38fdcf1d980158139&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&redirect_uri=http://localhost:3000/oauth">
-    <image class="spotify-button" src="Spotify_Logo_RGB_GREEN.png" style="width: auto; height: 35px; display: none;">
-    </image>
-  </a>
-  <textarea class="client-input" style="display: none;"></textarea>
+    <script src="include.js"></script>
+    <script src="command.js"></script>
+    <script src="response.js"></script>
+    <script src="checkLights.js"></script>
+    <script src="alarm.js" class="alarm"id="inactive"></script>
+    <!--script src="spotify.js" class="spotify"id="inactive"></script-->
+    <img id="image" class="logo" src="logo1.png">
+    <a
+      href="https://accounts.spotify.com/authorize?response_type=code&client_id=f137e890f3734bd38fdcf1d980158139&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&redirect_uri=http://localhost:3000/oauth">
+      <image class="spotify-button" src="Spotify_Logo_RGB_GREEN.png" style="width: auto; height: 35px; display: none;"></image>
+    </a>
+    <textarea class="client-input" style="display: none;"></textarea>
 </body>
-
 </html>

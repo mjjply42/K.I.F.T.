@@ -16,6 +16,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 
 	com "./commands"
@@ -45,6 +46,7 @@ func main() {
 	http.Handle("/", fs)
 
 	http.HandleFunc("/command", commandhandler)
+	http.HandleFunc("/response", responseHandler)
 	http.HandleFunc("/oauth", oauthTokenHandler)
 	http.HandleFunc("/users", usersHandler)
 
@@ -52,18 +54,21 @@ func main() {
 	fmt.Println("Server Running...")
 	http.ListenAndServe(fmt.Sprintf("%s:%d", serverHost, serverPort), nil)
 }
-
-func commandhandler(res http.ResponseWriter, req *http.Request) {
-
+func runSphinx() string {
 	out, err := exec.Command("./psphinx").Output()
 	if err != nil {
 		log.Printf("%s\n", err)
 	}
 	check := string(out)
 	log.Println(check)
-	fmt.Fprintln(res, check)
+	//fmt.Fprintln(res, check)
+	return check
+}
+func commandhandler(res http.ResponseWriter, req *http.Request) {
 
-	testString := check
+	/*testString =*/
+	runSphinx()
+	testString := "Send Email"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",
@@ -103,36 +108,42 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 			log.Println(commands[i])
 			flag = 1
 			if i == 0 {
-				log.Println(com.GetWeather("Union City"))
-				fmt.Fprintln(res, com.GetWeather("Union City"))
+				log.Println("What city?")
+				fmt.Fprintln(res, "Weather; Tell me the city")
 			} else if i == 1 {
-				log.Println(com.GetEvents("Fremont"))
-				fmt.Fprintln(res, com.GetEvents("Fremont"))
+				flag = 1
+				log.Println(com.GetEvents("What city?"))
+				fmt.Fprintln(res, com.GetEvents("Event; Tell me the city"))
 			} else if i == 2 {
-				message := "HELLO This is from kift"
-				who := "stsong42@gmail.com"
-				value := com.SendEmail(message, who)
-				log.Println(value)
-				fmt.Fprintln(res, value)
+				flag = 1
+				log.Println("Type Email Address")
+				fmt.Fprintln(res, "Email; Please type Email Address")
 			} else if i == 3 {
-				log.Println(com.SearchTerm("word"))
-				fmt.Fprintln(res, com.SearchTerm("word"))
+				flag = 1
+				log.Println("What word would you like to search?")
+				fmt.Fprintln(res, "Define; What word would you like to search?")
 			} else if i == 4 {
+				flag = 1
 				log.Println("Alarm; Enter Alarm Time in minutes (MAX 59)")
 				fmt.Fprintln(res, ("Alarm; Enter Alarm Time in minutes (MAX 59)"))
 			} else if i == 5 {
+				flag = 1
 				log.Println(com.PlayMusic(AccessToken))
 				fmt.Fprintln(res, com.PlayMusic(AccessToken))
 			} else if i == 6 {
+				flag = 1
 				log.Println(PrintConnected(UsersConnected))
 				fmt.Fprintln(res, PrintConnected(UsersConnected))
 			} else if i == 8 {
+				flag = 1
 				log.Println("Turn on lights")
 				fmt.Fprintln(res, "lights; Turning on lights")
 			} else if i == 9 {
+				flag = 1
 				log.Println("Turn off lights")
 				fmt.Fprintln(res, "lights; Turning off lights")
 			} else if i == 10 {
+				flag = 1
 				log.Println((commands))
 				i := 0
 				fmt.Fprintln(res, "List Commands;")
@@ -147,6 +158,41 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 	if flag == 0 {
 		log.Println("Command not found.")
 		fmt.Fprintln(res, "Command not found. Please Try Again.")
+	}
+}
+func responseHandler(res http.ResponseWriter, req *http.Request) {
+
+	sp := req.FormValue("speak")
+	speech, err := strconv.Atoi(sp)
+	if err == nil {
+		speech = speech
+	}
+	log.Println(speech)
+	duty := req.FormValue("duty")
+	var whom = "test@gmail.com"
+	var answer = "a"
+	if speech == 1 {
+		answer = runSphinx()
+	} else {
+		whom = req.FormValue("email")
+	}
+	who := string([]byte(whom))
+	log.Println(who)
+
+	if duty == "Weather" {
+		log.Println(com.GetWeather(answer))
+		fmt.Fprintln(res, com.GetWeather(answer))
+	} else if duty == "Event" {
+		log.Println(com.GetEvents(answer))
+		fmt.Fprintln(res, com.GetEvents(answer))
+	} else if duty == "Email" {
+		message := "HELLO This is from kift"
+		value := com.SendEmail(message, who)
+		log.Println(value)
+		fmt.Fprintln(res, value)
+	} else if duty == "Define" {
+		log.Println(com.SearchTerm(answer))
+		fmt.Fprintln(res, com.SearchTerm(answer))
 	}
 }
 
