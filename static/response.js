@@ -7,6 +7,7 @@ function    sendResponse(command, content)
     if(command == "Email")
     {
         $(".client-input").show();
+        $(".client-input").focus();
         $("#response").append('<li>' + content + '</li>');
         var voice_synth = window.speechSynthesis;
         var voice_speech = new SpeechSynthesisUtterance("Please type email address");
@@ -22,7 +23,6 @@ function    sendResponse(command, content)
                 method: "POST",
                 data: {email, speak, duty},
                 success: function (data) {
-                console.log(data)
             }});
         }
         })
@@ -40,7 +40,6 @@ function    sendResponse(command, content)
                 method: "POST",
                 data: {speak,duty},
                 success: function (data) {
-                console.log(data)
             }});
 
     }
@@ -57,7 +56,6 @@ function    sendResponse(command, content)
                 method: "POST",
                 data: {speak,duty},
                 success: function (data) {
-                console.log(data)
             }});
 
     }
@@ -74,7 +72,6 @@ function    sendResponse(command, content)
                 method: "POST",
                 data: {speak,duty},
                 success: function (data) {
-                console.log(data)
             }});
 
     }

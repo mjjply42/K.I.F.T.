@@ -3,7 +3,10 @@ function stateCheck(jsFilePath) {
     let name = split_arr[0];
     let script = document.querySelector("."+name);
     if(script.id == "active")
-        script.id = "inactive";
+        return 0;
     else
-        script.id = "active"
+    {
+        script.id = "active";
+        return 1;
+    }
 }

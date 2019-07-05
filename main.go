@@ -68,7 +68,7 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 
 	/*testString =*/
 	runSphinx()
-	testString := "Send Email"
+	testString := "Set Alarm"
 	var commands = []string{
 		"Get me the weather",
 		"Events near me",

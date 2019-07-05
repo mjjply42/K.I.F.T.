@@ -6,15 +6,15 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <link rel="stylesheet" href="KIFT.css">
   <br>
-  <button class="alarm-start">Animate</button>
+  <!--button class="alarm-start">Animate</button-->
   <div class="bar-grow">
     <div class="left-side">
-      <h1 class="left-minute">2</h1>
-      <h1 class="left-second">3</h1>
+      <h1 class="left-minute">0</h1>
+      <h1 class="left-second">0</h1>
     </div>
     <div class="right-side">
-      <h1 class="right-minute">4</h1>
-      <h1 class="right-second">7</h1>
+      <h1 class="right-minute">0</h1>
+      <h1 class="right-second">0</h1>
     </div>
   </div>
   <p id="notification" style="display: none"></p>
@@ -33,12 +33,6 @@
   </form>
 </head>
 <body>
-    <script src="include.js"></script>
-    <script src="command.js"></script>
-    <script src="response.js"></script>
-    <script src="checkLights.js"></script>
-    <script src="alarm.js" class="alarm"id="inactive"></script>
-    <!--script src="spotify.js" class="spotify"id="inactive"></script-->
     <img id="image" class="logo" src="logo1.png">
     <a
       href="https://accounts.spotify.com/authorize?response_type=code&client_id=f137e890f3734bd38fdcf1d980158139&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&redirect_uri=http://localhost:3000/oauth">
@@ -46,4 +40,10 @@
     </a>
     <textarea class="client-input" style="display: none;"></textarea>
 </body>
+<script src="include.js"></script>
+<script src="command.js"></script>
+<script src="response.js"></script>
+<script src="checkLights.js"></script>
+<script src="alarm.js" class="alarm"id="inactive"></script>
+<!--script src="spotify.js" class="spotify"id="inactive"></script-->
 </html>
