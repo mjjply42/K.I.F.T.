@@ -1,6 +1,9 @@
     let recording = document.getElementById("recording");
 
     startButton.addEventListener("click", function () {
+      var audio = new Audio('record.wav');
+      audio.play();
+      setTimeout(function(){  }, 200);
         $.ajax({
           url: "/command",
           method: "GET",

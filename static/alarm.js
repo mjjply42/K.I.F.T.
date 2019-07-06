@@ -11,7 +11,6 @@
       e.preventDefault();
     });
     function openAlarm(time) {
-      console.log("pibidy");
       let add = 0;
       right_min.textContent = parseInt(time % 10);
       time /= 10;
@@ -43,6 +42,7 @@
                   add++;
                 } else {
                   clearInterval(reveal);
+                  add = 0;
                 }
               }
             }
@@ -50,12 +50,10 @@
         }
       }
       countdown();
-      return ;
     }
 
     function  countdown()
     {
-      console.log("pooidy");
         let alarmy = setInterval(runAlarm,1000);
         function  runAlarm()
         {
@@ -95,34 +93,12 @@
                 let state_set = document.querySelector(".alarm");
                 state_set.id = "inactive";
                 
-                let item = document.querySelector(".bar-grow");
-                item.parentNode.removeChild(item);
-
-                let div = document.createElement("div");
-                let div1 = document.createElement("div");
-                let div2 = document.createElement("div");
-                let h1 = document.createElement("h1");
-                let h2 = document.createElement("h1");
-                let h3 = document.createElement("h1");
-                let h4 = document.createElement("h1");
-
-                div.className = "bar-grow";
-                div1.className = "left-side";
-                div2.className = "right-side";
-                h1.className = "left-minute";
-                h2.className = "left-second";
-                h3.className = "right-minute";
-                h4.className = "right-second";
-
-                document.querySelector(".clock").appendChild(div);
-                document.querySelector(".bar-grow").appendChild(div1);
-                document.querySelector(".bar-grow").appendChild(div2);
-                document.querySelector(".left-side").appendChild(h1);
-                document.querySelector(".left-side").appendChild(h2);
-                document.querySelector(".right-side").appendChild(h3);
-                document.querySelector(".right-side").appendChild(h4);
                 
-                return ;
+                alarm.style.height = 2 + "px";
+                alarm.style.width = 1 + "px";
+                alarm.style.opacity = 1.0;
+                left_side.style.opacity = 0;
+                right_side.style.opacity = 0;
               }
           }
         }
@@ -162,9 +138,7 @@
               error_txt.removeChild(error_txt.lastChild);
             }, 2000);
           }
-          console.log(user_input);
           openAlarm(user_input)
-          return ;
         }
       });
     }
