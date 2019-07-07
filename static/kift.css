@@ -99,6 +99,14 @@ html,body{
 
   #startButton:hover {
     cursor: pointer;
+    background: #6abfbf;
+  }
+  #startButton:active {
+    background: #4ab0b0;
+    outline: none;
+  }
+  #startButton:focus {
+    outline: none;
   }
 
   .user-field {
@@ -132,8 +140,8 @@ html,body{
   }
 
   .bar-grow {
-    height: 2px;
-    width: 1px;
+    height: 0px;
+    width: 0px;
     background-color: red;
     position: absolute;
   }
@@ -162,6 +170,12 @@ html,body{
   .left-second,
   .right-second {
     float: right;
+  }
+  .right-second {
+    margin-right: 8px;
+  }
+  .left-minute {
+    margin-left: 8px;
   }
 
   
