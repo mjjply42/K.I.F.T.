@@ -26,8 +26,9 @@ POCKETSPHINX=$(brew info pocketsphinx | grep '/usr')
 # Checks if Homebrew is installed, if not, the script installs Homebrew
 if [ -z "$CHECK" ]
 then
-    echo "${Red} Homebrew does not exist${End}....${Yellow}checking dependencies${End}"  
+    echo "${Red} Homebrew does not exist${End}....${Yellow}Installing Homebrew${End}"  
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    echo ${Yellow}checking dependencies${End}"
 else
       echo "${Green} Homebrew exists${End}....${Yellow}checking dependencies${End}"
 fi
