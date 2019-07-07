@@ -28,7 +28,7 @@ if [ -z "$CHECK" ]
 then
     echo "${Red} Homebrew does not exist${End}....${Yellow}Installing Homebrew${End}"  
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    echo ${Yellow}checking dependencies${End}"
+    echo "${Yellow}checking dependencies${End}"
 else
       echo "${Green} Homebrew exists${End}....${Yellow}checking dependencies${End}"
 fi
@@ -36,14 +36,15 @@ fi
 # Check if Pocketsphinx exists, if not the script installs Pocketsphinx
 if [ -z "$POCKETSPHINX" ]
 then
-      cd pocketsphinx
-      make setup
-      make re
-      cd ..
+    echo "${Red}Pockeshpinx does not exist.${End} ${Yellow}Installing libraries via${End} Homebrew"
+    cd pocketsphinx
+    make setup
+    make re
+    cd ..
 else
-      cd pocketsphinx
-      make re
-      cd ..
+    cd pocketsphinx
+    make re
+    cd ..
 fi
-echo ${Blue} Starting Program...${End}
+echo "${Blue} Starting Program...${End}"
 go run main.go
