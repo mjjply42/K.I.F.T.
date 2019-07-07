@@ -23,6 +23,7 @@ End=$'\e[0m'
 CHECK=$(which brew)
 POCKETSPHINX=$(brew info pocketsphinx | grep '/usr')
 
+# Checks if Homebrew is installed, if not, the script installs Homebrew
 if [ -z "$CHECK" ]
 then
     echo "${Red} Homebrew does not exist${End}....${Yellow}checking dependencies${End}"  
@@ -31,6 +32,7 @@ else
       echo "${Green} Homebrew exists${End}....${Yellow}checking dependencies${End}"
 fi
 
+# Check if Pocketsphinx exists, if not the script installs Pocketsphinx
 if [ -z "$POCKETSPHINX" ]
 then
       cd pocketsphinx
