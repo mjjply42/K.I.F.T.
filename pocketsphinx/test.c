@@ -21,9 +21,9 @@ char const *decoded_speech;
 int main(int argc, char *argv[]) {
 
     config = cmd_ln_init(NULL, ps_args(), TRUE,                 // Load the configuration structure - ps_args() passes the default values
-                "-hmm", "./pocketsphinx/en-us/en-us-adapt",                  // path to the standard english language model
-                "-lm", "./pocketsphinx/en-us/en-us.lm.bin",                  // custom language model (file must be present)
-                "-dict", "./pocketsphinx/en-us/cmudict-en-us.dict",          // custom dictionary (file must be present)
+                "-hmm", "./pocketsphinx/model/model",                  // path to the standard english language model
+                "-lm", "./pocketsphinx/model/kift.lm",                  // custom language model (file must be present)
+                "-dict", "./pocketsphinx/model/kift.dict",          // custom dictionary (file must be present)
                 "-logfn", "/dev/null", NULL);                   // suppress log info from being sent to screen
 
     ps = ps_init(config);                                                        // initialize the pocketsphinx decoder

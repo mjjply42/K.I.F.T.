@@ -56,9 +56,9 @@ cmd_ln_t	*psphinx_config(void)
 	cmd_ln_t		*config;
 
 	config = cmd_ln_init(NULL, ps_args(), TRUE,
-				"-hmm", "./en-us/en-us-adapt",
-				"-lm", "./en-us/en-us.lm.bin",
-				"-dict", "./en-us/cmudict-en-us.dict",
+				"-hmm", "./pocketsphinx/model/model/",
+				"-lm", "./pocketsphinx/model/kift.lm",
+				"-dict", "./pocketsphinx/model/kift.dict",
 				"-logfn", "/dev/null", NULL);
 	return (config);
 }

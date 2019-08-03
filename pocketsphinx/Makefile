@@ -1,6 +1,6 @@
 NAME = psphinx
 
-SRCS = test.c helpers.c
+SRCS = sphinx.c helpers.c
 
 SFLAGS = -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" \
     `pkg-config --cflags --libs pocketsphinx sphinxbase`
