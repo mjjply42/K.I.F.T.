@@ -17,104 +17,104 @@ ngram 3=31
 \1-grams:
 -0.9777 </s> -0.3010
 -0.9777 <s> -0.2527
--2.0569 ALARM -0.2527
--2.0569 COMMANDS -0.2527
--2.0569 CONNECTED -0.2527
--2.0569 DYLAN -0.2527
--2.0569 EMAIL -0.2527
--2.0569 EVENTS -0.2972
--2.0569 GET -0.2933
--1.4548 IS -0.2855
--1.7559 LIGHT -0.2527
--2.0569 LIST -0.2972
--2.0569 MATTHEW -0.2527
--1.7559 ME -0.2484
--2.0569 MUSIC -0.2527
--2.0569 NEAR -0.2933
--2.0569 OFF -0.2933
--2.0569 ON -0.2933
--2.0569 PLAY -0.2972
--2.0569 SEND -0.2972
--2.0569 SET -0.2972
--2.0569 STEVEN -0.2527
--2.0569 THE -0.2972
--1.7559 TURN -0.2933
--2.0569 WEATHER -0.2527
--1.5798 WHERE -0.2855
--2.0569 WHO -0.2855
+-2.0569 alarm -0.2527
+-2.0569 commands -0.2527
+-2.0569 connected -0.2527
+-2.0569 dylan -0.2527
+-2.0569 email -0.2527
+-2.0569 events -0.2972
+-2.0569 get -0.2933
+-1.4548 is -0.2855
+-1.7559 light -0.2527
+-2.0569 list -0.2972
+-2.0569 matthew -0.2527
+-1.7559 me -0.2484
+-2.0569 music -0.2527
+-2.0569 near -0.2933
+-2.0569 off -0.2933
+-2.0569 on -0.2933
+-2.0569 play -0.2972
+-2.0569 send -0.2972
+-2.0569 set -0.2972
+-2.0569 steven -0.2527
+-2.0569 the -0.2972
+-1.7559 turn -0.2933
+-2.0569 weather -0.2527
+-1.5798 where -0.2855
+-2.0569 who -0.2855
 
 \2-grams:
--1.3802 <s> EVENTS 0.0000
--1.3802 <s> GET 0.0000
--1.3802 <s> LIST 0.0000
--1.3802 <s> PLAY 0.0000
--1.3802 <s> SEND 0.0000
--1.3802 <s> SET 0.0000
--1.0792 <s> TURN 0.0000
--0.9031 <s> WHERE 0.0000
--1.3802 <s> WHO 0.0000
--0.3010 ALARM </s> -0.3010
--0.3010 COMMANDS </s> -0.3010
--0.3010 CONNECTED </s> -0.3010
--0.3010 DYLAN </s> -0.3010
--0.3010 EMAIL </s> -0.3010
--0.3010 EVENTS NEAR 0.0000
--0.3010 GET ME -0.1761
--0.9031 IS CONNECTED 0.0000
--0.9031 IS DYLAN 0.0000
--0.9031 IS MATTHEW 0.0000
--0.9031 IS STEVEN 0.0000
--0.3010 LIGHT </s> -0.3010
--0.3010 LIST COMMANDS 0.0000
--0.3010 MATTHEW </s> -0.3010
--0.6021 ME </s> -0.3010
--0.6021 ME THE 0.0000
--0.3010 MUSIC </s> -0.3010
--0.3010 NEAR ME -0.1761
--0.3010 OFF LIGHT 0.0000
--0.3010 ON LIGHT 0.0000
--0.3010 PLAY MUSIC 0.0000
--0.3010 SEND EMAIL 0.0000
--0.3010 SET ALARM 0.0000
--0.3010 STEVEN </s> -0.3010
--0.3010 THE WEATHER 0.0000
--0.6021 TURN OFF 0.0000
--0.6021 TURN ON 0.0000
--0.3010 WEATHER </s> -0.3010
--0.3010 WHERE IS -0.0969
--0.3010 WHO IS -0.2430
+-1.3802 <s> events 0.0000
+-1.3802 <s> get 0.0000
+-1.3802 <s> list 0.0000
+-1.3802 <s> play 0.0000
+-1.3802 <s> send 0.0000
+-1.3802 <s> set 0.0000
+-1.0792 <s> turn 0.0000
+-0.9031 <s> where 0.0000
+-1.3802 <s> who 0.0000
+-0.3010 alarm </s> -0.3010
+-0.3010 commands </s> -0.3010
+-0.3010 connected </s> -0.3010
+-0.3010 dylan </s> -0.3010
+-0.3010 email </s> -0.3010
+-0.3010 events near 0.0000
+-0.3010 get me -0.1761
+-0.9031 is connected 0.0000
+-0.9031 is dylan 0.0000
+-0.9031 is matthew 0.0000
+-0.9031 is steven 0.0000
+-0.3010 light </s> -0.3010
+-0.3010 list commands 0.0000
+-0.3010 matthew </s> -0.3010
+-0.6021 me </s> -0.3010
+-0.6021 me the 0.0000
+-0.3010 music </s> -0.3010
+-0.3010 near me -0.1761
+-0.3010 off light 0.0000
+-0.3010 on light 0.0000
+-0.3010 play music 0.0000
+-0.3010 send email 0.0000
+-0.3010 set alarm 0.0000
+-0.3010 steven </s> -0.3010
+-0.3010 the weather 0.0000
+-0.6021 turn off 0.0000
+-0.6021 turn on 0.0000
+-0.3010 weather </s> -0.3010
+-0.3010 where is -0.0969
+-0.3010 who is -0.2430
 
 \3-grams:
--0.3010 <s> EVENTS NEAR
--0.3010 <s> GET ME
--0.3010 <s> LIST COMMANDS
--0.3010 <s> PLAY MUSIC
--0.3010 <s> SEND EMAIL
--0.3010 <s> SET ALARM
--0.6021 <s> TURN OFF
--0.6021 <s> TURN ON
--0.3010 <s> WHERE IS
--0.3010 <s> WHO IS
--0.3010 EVENTS NEAR ME
--0.3010 GET ME THE
--0.3010 IS CONNECTED </s>
--0.3010 IS DYLAN </s>
--0.3010 IS MATTHEW </s>
--0.3010 IS STEVEN </s>
--0.3010 LIST COMMANDS </s>
--0.3010 ME THE WEATHER
--0.3010 NEAR ME </s>
--0.3010 OFF LIGHT </s>
--0.3010 ON LIGHT </s>
--0.3010 PLAY MUSIC </s>
--0.3010 SEND EMAIL </s>
--0.3010 SET ALARM </s>
--0.3010 THE WEATHER </s>
--0.3010 TURN OFF LIGHT
--0.3010 TURN ON LIGHT
--0.7782 WHERE IS DYLAN
--0.7782 WHERE IS MATTHEW
--0.7782 WHERE IS STEVEN
--0.3010 WHO IS CONNECTED
+-0.3010 <s> events near
+-0.3010 <s> get me
+-0.3010 <s> list commands
+-0.3010 <s> play music
+-0.3010 <s> send email
+-0.3010 <s> set alarm
+-0.6021 <s> turn off
+-0.6021 <s> turn on
+-0.3010 <s> where is
+-0.3010 <s> who is
+-0.3010 events near me
+-0.3010 get me the
+-0.3010 is connected </s>
+-0.3010 is dylan </s>
+-0.3010 is mattew </s>
+-0.3010 is steven </s>
+-0.3010 list commands </s>
+-0.3010 me the weather
+-0.3010 near me </s>
+-0.3010 off light </s>
+-0.3010 on light </s>
+-0.3010 play music </s>
+-0.3010 send email </s>
+-0.3010 set alarm </s>
+-0.3010 the weather </s>
+-0.3010 turn off light
+-0.3010 turn on light
+-0.7782 where is dylan
+-0.7782 where is matthew
+-0.7782 where is steven
+-0.3010 who is connected
 
 \end\
