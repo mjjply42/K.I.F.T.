@@ -60,27 +60,24 @@ func runSphinx() string {
 		log.Printf("%s\n", err)
 	}
 	check := string(out)
-	log.Println(check)
-	//fmt.Fprintln(res, check)
 	return check
 }
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 
 	/*testString =*/
-	runSphinx()
-	testString := "Set Alarm"
+	testString := runSphinx()
 	var commands = []string{
-		"Get me the weather",
-		"Events near me",
-		"Send Email",
-		"Search dictionary for",
-		"Set Alarm",
-		"Play Music",
-		"Who is connected",
-		"Where is",
-		"Turn on light",
-		"Turn off light",
-		"List Commands",
+		"get me the weather\n",
+		"events near me\n",
+		"send email\n",
+		"search dictionary for\n",
+		"set alarm\n",
+		"play music\n",
+		"who is connected\n",
+		"where is\n",
+		"turn on light\n",
+		"turn off light\n",
+		"list commands\n",
 	}
 
 	//add string from user to a history buffer
@@ -109,23 +106,23 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 			flag = 1
 			if i == 0 {
 				log.Println("What city?")
-				fmt.Fprintln(res, "Weather; Tell me the city")
+				fmt.Fprintln(res, "weather; Tell me the city")
 			} else if i == 1 {
 				flag = 1
 				log.Println(com.GetEvents("What city?"))
-				fmt.Fprintln(res, com.GetEvents("Event; Tell me the city"))
+				fmt.Fprintln(res, com.GetEvents("event; Tell me the city"))
 			} else if i == 2 {
 				flag = 1
 				log.Println("Type Email Address")
-				fmt.Fprintln(res, "Email; Please type Email Address")
+				fmt.Fprintln(res, "email; Please type Email Address")
 			} else if i == 3 {
 				flag = 1
 				log.Println("What word would you like to search?")
-				fmt.Fprintln(res, "Define; What word would you like to search?")
+				fmt.Fprintln(res, "define; What word would you like to search?")
 			} else if i == 4 {
 				flag = 1
 				log.Println("Alarm; Enter Alarm Time in minutes (MAX 59)")
-				fmt.Fprintln(res, ("Alarm; Enter Alarm Time in minutes (MAX 59)"))
+				fmt.Fprintln(res, ("alarm; Enter Alarm Time in minutes (MAX 59)"))
 			} else if i == 5 {
 				flag = 1
 				log.Println(com.PlayMusic(AccessToken))
@@ -179,18 +176,18 @@ func responseHandler(res http.ResponseWriter, req *http.Request) {
 	who := string([]byte(whom))
 	log.Println(who)
 
-	if duty == "Weather" {
+	if duty == "weather" {
 		log.Println(com.GetWeather(answer))
 		fmt.Fprintln(res, com.GetWeather(answer))
-	} else if duty == "Event" {
+	} else if duty == "event" {
 		log.Println(com.GetEvents(answer))
 		fmt.Fprintln(res, com.GetEvents(answer))
-	} else if duty == "Email" {
+	} else if duty == "email" {
 		message := "HELLO This is from kift"
 		value := com.SendEmail(message, who)
 		log.Println(value)
 		fmt.Fprintln(res, value)
-	} else if duty == "Define" {
+	} else if duty == "define" {
 		log.Println(com.SearchTerm(answer))
 		fmt.Fprintln(res, com.SearchTerm(answer))
 	}

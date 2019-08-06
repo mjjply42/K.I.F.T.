@@ -4,7 +4,7 @@ function    sendResponse(command, content)
     let email = "test@gmail.com";
     let duty = command;
 
-    if(command == "Email")
+    if(command == "email")
     {
         $(".client-input").show();
         $(".client-input").focus();
@@ -27,7 +27,7 @@ function    sendResponse(command, content)
         }
         })
     }
-    else if(command == "Weather")
+    else if(command == "weather")
     {
         speak = 1;
         $("#response").append('<li>' + content + '</li>');
@@ -43,7 +43,7 @@ function    sendResponse(command, content)
             }});
 
     }
-    else if(command == "Event")
+    else if(command == "event")
     {
         speak = 1;
         $("#response").append('<li>' + content + '</li>');
@@ -59,7 +59,7 @@ function    sendResponse(command, content)
             }});
 
     }
-    else if(command == "Define")
+    else if(command == "define")
     {
         speak = 1;
         $("#response").append('<li>' + content + '</li>');

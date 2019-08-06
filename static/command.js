@@ -17,7 +17,7 @@
               var command = com_array[0];
               function dispatchComm(comm, content)
               {
-                if (comm == "Alarm")
+                if (comm == "alarm")
                 {
                   let state = stateCheck("alarm.js");
                   if(state == 1)
@@ -25,7 +25,7 @@
                   else
                     return ;
                 } 
-                else if (comm == "Song")
+                else if (comm == "song")
                 {
                   startSpotify();
                 }
