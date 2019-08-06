@@ -60,17 +60,16 @@ func runSphinx() string {
 		log.Printf("%s\n", err)
 	}
 	check := string(out)
+	log.Printf("Command: %s\n", check)
 	return check
 }
 func commandhandler(res http.ResponseWriter, req *http.Request) {
 
-	/*testString =*/
 	testString := runSphinx()
 	var commands = []string{
 		"get me the weather\n",
 		"events near me\n",
 		"send email\n",
-		"search dictionary for\n",
 		"set alarm\n",
 		"play music\n",
 		"who is connected\n",
@@ -106,11 +105,11 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 			flag = 1
 			if i == 0 {
 				log.Println("What city?")
-				fmt.Fprintln(res, "weather; Tell me the city")
+				fmt.Fprintln(res, "weather; Please input the city")
 			} else if i == 1 {
 				flag = 1
-				log.Println(com.GetEvents("What city?"))
-				fmt.Fprintln(res, com.GetEvents("event; Tell me the city"))
+				log.Println("What city?")
+				fmt.Fprintln(res, "event; Please input the city")
 			} else if i == 2 {
 				flag = 1
 				log.Println("Type Email Address")
@@ -146,7 +145,7 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 				fmt.Fprintln(res, "List Commands;")
 				for i < len(commands) {
 					fmt.Fprintln(res, (commands[i]))
-					fmt.Fprintf(res, "-------------")
+					fmt.Fprintf(res, "commands;")
 					i++
 				}
 			}
@@ -159,22 +158,21 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 }
 func responseHandler(res http.ResponseWriter, req *http.Request) {
 
-	sp := req.FormValue("speak")
+	sp := req.FormValue("value")
 	speech, err := strconv.Atoi(sp)
 	if err == nil {
 		speech = speech
 	}
-	log.Println(speech)
 	duty := req.FormValue("duty")
 	var whom = "test@gmail.com"
 	var answer = "a"
-	if speech == 1 {
-		answer = runSphinx()
+	if duty != "email" {
+		answer = req.FormValue("value")
+		answer = strings.TrimSuffix(answer, "\n")
 	} else {
 		whom = req.FormValue("email")
 	}
 	who := string([]byte(whom))
-	log.Println(who)
 
 	if duty == "weather" {
 		log.Println(com.GetWeather(answer))

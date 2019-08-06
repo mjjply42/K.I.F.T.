@@ -18,12 +18,12 @@ func GetWeather(city string) string {
 	//perform get request
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	//Grab the body from response
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
 	// Create a place where the json data will be stored
@@ -57,12 +57,12 @@ func GetEvents(city string) string {
 	url := fmt.Sprintf("http://api.eventful.com/json/events/search?...&keywords=fun&location=%s&date=Future&within=10&app_key=nDJFtjJmt4pt4WjP", city)
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	//Grab the body from response
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
 	type EventInfo struct {

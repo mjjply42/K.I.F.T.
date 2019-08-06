@@ -2,6 +2,7 @@
 
     startButton.addEventListener("click", function () {
       var audio = new Audio('record.wav');
+      console.log("playing");
       audio.play();
       setTimeout(function(){  }, 200);
         $.ajax({
@@ -32,6 +33,22 @@
                 else if (comm == "lights")
                 {
                   checkLights(content);
+                }
+                else if (comm == "commands")
+                {
+                  $("#response").append('<li>' + "Command List:" +
+                  "1.) Get me the weather---" +
+                  "2.) Events near me---"+
+                  "3.) Send email---"+
+                  "4.) Set alarm---"+
+                  "5.) Play music---"+
+                  "6.) Turn on light---"+
+                  "7.) Turn off light---"+
+                  "8.) List commands---" + '</li>');
+                  var voice_synth = window.speechSynthesis;
+                  var voice_speech = new SpeechSynthesisUtterance("Here is the list of available commands for use");
+                  voice_speech.lang = 'en-US';
+                  voice_synth.speak(voice_speech);
                 }
                 else
                 {

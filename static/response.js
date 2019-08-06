@@ -3,7 +3,9 @@ function    sendResponse(command, content)
     let speak = 0;
     let email = "test@gmail.com";
     let duty = command;
+    let value = 'a';
 
+    console.log(command);
     if(command == "email")
     {
         $(".client-input").show();
@@ -23,56 +25,89 @@ function    sendResponse(command, content)
                 method: "POST",
                 data: {email, speak, duty},
                 success: function (data) {
+                    $("#response").append('<li>' + "Email Sent!" + '</li>');
+                    var voice_synth = window.speechSynthesis;
+                    var voice_speech = new SpeechSynthesisUtterance("Email Sent");
+                    voice_speech.lang = 'en-US';
+                    voice_synth.speak(voice_speech);
             }});
         }
         })
     }
     else if(command == "weather")
-    {
-        speak = 1;
-        $("#response").append('<li>' + content + '</li>');
-        var voice_synth = window.speechSynthesis;
-        var voice_speech = new SpeechSynthesisUtterance("Tell me what city");
-        voice_speech.lang = 'en-US';
-        voice_synth.speak(voice_speech);
-            $.ajax({
-                url: "/response",
-                method: "POST",
-                data: {speak,duty},
-                success: function (data) {
-            }});
+    {;
 
+        $(".client-input").show();
+        $(".client-input").focus();
+        $("#response").append('<li>' + content + '</li>');
+        var weather_synth = window.speechSynthesis;
+        var weather_speech = new SpeechSynthesisUtterance("Please input the city");
+        weather_speech.lang = 'en-US';
+        weather_synth.speak(weather_speech)
+        $(".client-input").on('keyup', function (event) {
+            if (event.keyCode == 13) {
+            value = $(".client-input").val();
+            $(".client-input").val("");
+            $(".client-input").hide();
+            weather_synth.cancel();
+                $.ajax({
+                    url: "/response",
+                    method: "POST",
+                    data: {value, duty},
+                    success: function (data) {
+                    $("#response").append('<li>' + data + '</li>');
+                }});
+                
+            }
+            })
     }
     else if(command == "event")
     {
-        speak = 1;
+        $(".client-input").show();
+        $(".client-input").focus();
         $("#response").append('<li>' + content + '</li>');
-        var voice_synth = window.speechSynthesis;
-        var voice_speech = new SpeechSynthesisUtterance("Tell me what city");
-        voice_speech.lang = 'en-US';
-        voice_synth.speak(voice_speech);
-            $.ajax({
-                url: "/response",
-                method: "POST",
-                data: {speak,duty},
-                success: function (data) {
-            }});
+        var event_synth = window.speechSynthesis;
+        var event_speech = new SpeechSynthesisUtterance("Please input the city");
+        event_speech.lang = 'en-US';
+        event_synth.speak(event_speech);
+        $(".client-input").on('keyup', function (event) {
+            if (event.keyCode == 13) {
+                value = $(".client-input").val();
+            $(".client-input").val("");
+            $(".client-input").hide();
+            event_synth.cancel();
+                $.ajax({
+                    url: "/response",
+                    method: "POST",
+                    data: {value, duty},
+                    success: function (data) {
+                    $("#response").append('<li>' + data + '</li>');
+                }});
+            }
+            })
 
     }
     else if(command == "define")
     {
         speak = 1;
         $("#response").append('<li>' + content + '</li>');
-        var voice_synth = window.speechSynthesis;
-        var voice_speech = new SpeechSynthesisUtterance("Tell me the word");
-        voice_speech.lang = 'en-US';
-        voice_synth.speak(voice_speech);
-            $.ajax({
-                url: "/response",
-                method: "POST",
-                data: {speak,duty},
-                success: function (data) {
-            }});
-
+        var define_synth = window.speechSynthesis;
+        var define_speech = new SpeechSynthesisUtterance("Type the word");
+        define_speech.lang = 'en-US';
+        define_synth.speak(define_speech);
+        $(".client-input").on('keyup', function (event) {
+            if (event.keyCode == 13) {
+                value = $(".client-input").val();
+            $(".client-input").val("");
+            $(".client-input").hide();
+                $.ajax({
+                    url: "/response",
+                    method: "POST",
+                    data: {value, duty},
+                    success: function (data) {
+                    $("#response").append('<li>' + data + '</li>');
+                }});
+            }
+            })
     }
 }
