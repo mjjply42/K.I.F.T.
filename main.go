@@ -60,7 +60,7 @@ func runSphinx() string {
 		log.Printf("%s\n", err)
 	}
 	check := string(out)
-	log.Printf("Command: %s\n", check)
+	log.Printf("Command: %s", check)
 	return check
 }
 func commandhandler(res http.ResponseWriter, req *http.Request) {
@@ -72,8 +72,8 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 		"send email\n",
 		"set alarm\n",
 		"play music\n",
-		"who is connected\n",
-		"where is\n",
+		//"who is connected\n",
+		//"where is\n",
 		"turn on light\n",
 		"turn off light\n",
 		"list commands\n",
@@ -83,24 +83,9 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 	history = history + fmt.Sprintf("%d. %s\n", HistoryCounter, testString)
 	HistoryCounter += 1
 	flag := 0
-
 	//if string is equal to command
 	for i := 0; i < len(commands); i++ {
-		if i == 3 {
-			if len(testString) > 22 && strings.Compare(testString[0:21], commands[i]) == 0 {
-				flag = 1
-				log.Println(com.SearchTerm(testString[22:]))
-				fmt.Fprintln(res, com.SearchTerm(testString[22:]))
-			}
-		} else if i == 7 {
-			if len(testString) > 8 && strings.Compare(testString[0:8], commands[i]) == 0 {
-				flag = 1
-				//find username with rest of string
-				log.Println(testString[9:])
-				log.Println(findLocation(testString[9:]))
-				fmt.Fprintln(res, findLocation(testString[9:]))
-			}
-		} else if strings.Compare(testString, commands[i]) == 0 {
+		if strings.Compare(testString, commands[i]) == 0 {
 			log.Println(commands[i])
 			flag = 1
 			if i == 0 {
@@ -114,31 +99,31 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 				flag = 1
 				log.Println("Type Email Address")
 				fmt.Fprintln(res, "email; Please type Email Address")
-			} else if i == 3 {
+				/*} else if i == 3 {
 				flag = 1
 				log.Println("What word would you like to search?")
-				fmt.Fprintln(res, "define; What word would you like to search?")
-			} else if i == 4 {
+				fmt.Fprintln(res, "define; What word would you like to search?")*/
+			} else if i == 3 {
 				flag = 1
 				log.Println("Alarm; Enter Alarm Time in minutes (MAX 59)")
 				fmt.Fprintln(res, ("alarm; Enter Alarm Time in minutes (MAX 59)"))
-			} else if i == 5 {
+			} else if i == 4 {
 				flag = 1
 				log.Println(com.PlayMusic(AccessToken))
 				fmt.Fprintln(res, com.PlayMusic(AccessToken))
-			} else if i == 6 {
+				/*} else if i == 5 {
 				flag = 1
 				log.Println(PrintConnected(UsersConnected))
-				fmt.Fprintln(res, PrintConnected(UsersConnected))
-			} else if i == 8 {
+				fmt.Fprintln(res, PrintConnected(UsersConnected))*/
+			} else if i == 5 {
 				flag = 1
 				log.Println("Turn on lights")
 				fmt.Fprintln(res, "lights; Turning on lights")
-			} else if i == 9 {
+			} else if i == 6 {
 				flag = 1
 				log.Println("Turn off lights")
 				fmt.Fprintln(res, "lights; Turning off lights")
-			} else if i == 10 {
+			} else if i == 7 {
 				flag = 1
 				log.Println((commands))
 				i := 0

@@ -32,6 +32,7 @@
                 }
                 else if (comm == "lights")
                 {
+                  console.log("guhiduovipokf");
                   checkLights(content);
                 }
                 else if (comm == "commands")
@@ -52,6 +53,7 @@
                 }
                 else
                 {
+                  console.log("fghio");
                   sendResponse(comm, content);
                 }
               }

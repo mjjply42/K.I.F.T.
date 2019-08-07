@@ -35,8 +35,7 @@ function    sendResponse(command, content)
         })
     }
     else if(command == "weather")
-    {;
-
+    {
         $(".client-input").show();
         $(".client-input").focus();
         $("#response").append('<li>' + content + '</li>');
