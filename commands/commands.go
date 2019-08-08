@@ -175,7 +175,7 @@ func SendEmail(message string, who string) string {
 
 func PlayMusic(accessToken string) string {
 	if accessToken == "" {
-		return "Log in first. Repeat command."
+		return "song;Log in first. Repeat command."
 	}
 
 	//get available devices
@@ -190,7 +190,7 @@ func PlayMusic(accessToken string) string {
 	//Grab the body from response
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return ("Error during music play. Try again")
+		return ("song;Error during music play. Try again")
 	}
 
 	type connectedDevices struct {
@@ -211,16 +211,20 @@ func PlayMusic(accessToken string) string {
 
 	//if length of devices equal to zero
 	if len(m.Devices) == 0 {
-		return "Please open a device"
+		//return "song;Please open Spotify player"
+		out, err := exec.Command("~/Applications/Spotify.app/Contents/MacOS/Spotify").Output()
+		if err != nil {
+			log.Printf("%s %s\n", err, out)
+		}
 	}
 
 	//construct url
 	url := fmt.Sprintf("https://api.spotify.com/v1/me/player/play?device_id=%s", m.Devices[0].ID)
 	fmt.Println(url)
 	if PlayMusicHelper(url, accessToken) == 0 {
-		return "Error playing music"
+		return "song;Error playing music"
 	}
-	return "Music now playing"
+	return "song;Playing"
 }
 
 func PlayMusicHelper(url string, accessToken string) int {

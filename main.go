@@ -127,10 +127,9 @@ func commandhandler(res http.ResponseWriter, req *http.Request) {
 				flag = 1
 				log.Println((commands))
 				i := 0
-				fmt.Fprintln(res, "List Commands;")
+				fmt.Fprintln(res, "commands; List Commands;")
 				for i < len(commands) {
 					fmt.Fprintln(res, (commands[i]))
-					fmt.Fprintf(res, "commands;")
 					i++
 				}
 			}

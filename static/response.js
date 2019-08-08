@@ -5,12 +5,11 @@ function    sendResponse(command, content)
     let duty = command;
     let value = 'a';
 
-    console.log(command);
     if(command == "email")
     {
         $(".client-input").show();
         $(".client-input").focus();
-        $("#response").append('<li>' + content + '</li>');
+        $("#response").append('<li>' + content + '<br>' + '</li>');
         var voice_synth = window.speechSynthesis;
         var voice_speech = new SpeechSynthesisUtterance("Please type email address");
         voice_speech.lang = 'en-US';
@@ -25,7 +24,7 @@ function    sendResponse(command, content)
                 method: "POST",
                 data: {email, speak, duty},
                 success: function (data) {
-                    $("#response").append('<li>' + "Email Sent!" + '</li>');
+                    $("#response").append('<li>' + "Email Sent!" + '<br>' +'</li>');
                     var voice_synth = window.speechSynthesis;
                     var voice_speech = new SpeechSynthesisUtterance("Email Sent");
                     voice_speech.lang = 'en-US';
@@ -38,7 +37,7 @@ function    sendResponse(command, content)
     {
         $(".client-input").show();
         $(".client-input").focus();
-        $("#response").append('<li>' + content + '</li>');
+        $("#response").append('<li>' + content + '<br>' + '</li>');
         var weather_synth = window.speechSynthesis;
         var weather_speech = new SpeechSynthesisUtterance("Please input the city");
         weather_speech.lang = 'en-US';
@@ -54,7 +53,7 @@ function    sendResponse(command, content)
                     method: "POST",
                     data: {value, duty},
                     success: function (data) {
-                    $("#response").append('<li>' + data + '</li>');
+                    $("#response").append('<li>' + data + '<br>' + '</li>');
                 }});
                 
             }
@@ -64,7 +63,7 @@ function    sendResponse(command, content)
     {
         $(".client-input").show();
         $(".client-input").focus();
-        $("#response").append('<li>' + content + '</li>');
+        $("#response").append('<li>' + content + '<br>' + '</li>');
         var event_synth = window.speechSynthesis;
         var event_speech = new SpeechSynthesisUtterance("Please input the city");
         event_speech.lang = 'en-US';
@@ -80,7 +79,7 @@ function    sendResponse(command, content)
                     method: "POST",
                     data: {value, duty},
                     success: function (data) {
-                    $("#response").append('<li>' + data + '</li>');
+                    $("#response").append('<li>' + data + '<br>' + '</li>');
                 }});
             }
             })
@@ -89,7 +88,7 @@ function    sendResponse(command, content)
     else if(command == "define")
     {
         speak = 1;
-        $("#response").append('<li>' + content + '</li>');
+        $("#response").append('<li>' + content + '<br>' + '</li>');
         var define_synth = window.speechSynthesis;
         var define_speech = new SpeechSynthesisUtterance("Type the word");
         define_speech.lang = 'en-US';
@@ -104,7 +103,7 @@ function    sendResponse(command, content)
                     method: "POST",
                     data: {value, duty},
                     success: function (data) {
-                    $("#response").append('<li>' + data + '</li>');
+                    $("#response").append('<li>' + data + '<br>' + '</li>');
                 }});
             }
             })

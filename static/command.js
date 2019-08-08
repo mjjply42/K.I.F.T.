@@ -2,7 +2,6 @@
 
     startButton.addEventListener("click", function () {
       var audio = new Audio('record.wav');
-      console.log("playing");
       audio.play();
       setTimeout(function(){  }, 200);
         $.ajax({
@@ -18,6 +17,7 @@
               var command = com_array[0];
               function dispatchComm(comm, content)
               {
+                console.log(content);
                 if (comm == "alarm")
                 {
                   let state = stateCheck("alarm.js");
@@ -28,24 +28,23 @@
                 } 
                 else if (comm == "song")
                 {
-                  startSpotify();
+                  startSpotify(content);
                 }
                 else if (comm == "lights")
                 {
-                  console.log("guhiduovipokf");
                   checkLights(content);
                 }
                 else if (comm == "commands")
                 {
-                  $("#response").append('<li>' + "Command List:" +
-                  "1.) Get me the weather---" +
-                  "2.) Events near me---"+
-                  "3.) Send email---"+
-                  "4.) Set alarm---"+
-                  "5.) Play music---"+
-                  "6.) Turn on light---"+
-                  "7.) Turn off light---"+
-                  "8.) List commands---" + '</li>');
+                  $("#response").append('<li>' + "Command List:" + '<br>' + 
+                  "1.) Get me the weather" + '<br>' +
+                  "2.) Events near me"+ '<br>' +
+                  "3.) Send email"+ '<br>' +
+                  "4.) Set alarm"+ '<br>' +
+                  "5.) Play music"+ '<br>' +
+                  "6.) Turn on light"+ '<br>' +
+                  "7.) Turn off light"+ '<br>' +
+                  "8.) List commands" + '<br>' + '</li>');
                   var voice_synth = window.speechSynthesis;
                   var voice_speech = new SpeechSynthesisUtterance("Here is the list of available commands for use");
                   voice_speech.lang = 'en-US';
@@ -53,7 +52,6 @@
                 }
                 else
                 {
-                  console.log("fghio");
                   sendResponse(comm, content);
                 }
               }

@@ -112,7 +112,7 @@
     function  startAlarm(com_array)
     {
       $(".client-input").show();
-      $("#response").append('<li>' + com_array + '</li>');
+      $("#response").append('<li>' + com_array + '<br>' + '</li>');
       var alarm_synth = window.speechSynthesis;
       var alarm_speech = new SpeechSynthesisUtterance("Enter Alarm Time");
       alarm_speech.lang = 'en-US';
