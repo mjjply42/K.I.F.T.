@@ -184,7 +184,7 @@ func PlayMusic(accessToken string) string {
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))
 	resp, err := client.Do(req)
 	if err != nil {
-		return ("Error during music play. Try again")
+		return ("song;Error during music play. Try again")
 	}
 
 	//Grab the body from response
@@ -211,11 +211,8 @@ func PlayMusic(accessToken string) string {
 
 	//if length of devices equal to zero
 	if len(m.Devices) == 0 {
-		//return "song;Please open Spotify player"
-		out, err := exec.Command("~/Applications/Spotify.app/Contents/MacOS/Spotify").Output()
-		if err != nil {
-			log.Printf("%s %s\n", err, out)
-		}
+		go OpenPlayer()
+		PlayMusic(accessToken)
 	}
 
 	//construct url
@@ -225,6 +222,11 @@ func PlayMusic(accessToken string) string {
 		return "song;Error playing music"
 	}
 	return "song;Playing"
+}
+
+func OpenPlayer() {
+	cmd := exec.Command("/Applications/Spotify.app/Contents/MacOS/Spotify")
+	cmd.Start()
 }
 
 func PlayMusicHelper(url string, accessToken string) int {
