@@ -44,7 +44,7 @@
                   "5.) Play music"+ '<br>' +
                   "6.) Turn on light"+ '<br>' +
                   "7.) Turn off light"+ '<br>' +
-                  "8.) List commands" + '<br>' + '</li>');
+                  "8.) List commands" + '<br>' + '<br>' + '</li>');
                   var voice_synth = window.speechSynthesis;
                   var voice_speech = new SpeechSynthesisUtterance("Here is the list of available commands");
                   voice_speech.lang = 'en-US';

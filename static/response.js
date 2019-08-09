@@ -25,7 +25,7 @@ function    sendResponse(command, content)
                 method: "POST",
                 data: {email, speak, duty},
                 success: function (data) {
-                    $("#response").append('<li>' + "Email Sent!" + '<br>' +'</li>');
+                    $("#response").append('<li>' + "Email Sent!" + '<br>'  + '<br>' +'</li>');
                     var voice_synth = window.speechSynthesis;
                     var voice_speech = new SpeechSynthesisUtterance("Email Sent");
                     voice_speech.lang = 'en-US';
@@ -59,7 +59,7 @@ function    sendResponse(command, content)
                     cache: false,
                     data: {value, duty},
                     success: function (data) {
-                    $("#response").append('<li>' + data + '<br>' + '</li>');
+                    $("#response").append('<li>' + data + '<br>' + '<br>' + '</li>');
                     return ;
                 }});     
             }           
@@ -82,6 +82,8 @@ function    sendResponse(command, content)
             $(".client-input").hide();
             event_synth.cancel();
             $(".client-input").unbind();
+            value = value.replace(/ /gi, "+");
+            console.log(value);
             if(value != "")
             {
                 $.ajax({
@@ -90,7 +92,7 @@ function    sendResponse(command, content)
                     cache: false,
                     data: {value, duty},
                     success: function (data) {
-                    $("#response").append('<li>' + data + '<br>' + '</li>');
+                    $("#response").append('<li>' + data + '<br>' + '<br>' + '</li>');
                 }});
             }
         }
@@ -116,7 +118,7 @@ function    sendResponse(command, content)
                     method: "POST",
                     data: {value, duty},
                     success: function (data) {
-                    $("#response").append('<li>' + data + '<br>' + '</li>');
+                    $("#response").append('<li>' + data + '<br>' + '<br>' + '</li>');
                 }});
             }
             })
