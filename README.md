@@ -2,7 +2,7 @@
 ##### A voice-activated task manager
 <image src="https://github.com/mjjply42/K.I.F.T./blob/master/Screen%20Shot%202019-08-08%20at%2011.36.51%20PM.png"/>
 
-_This project uses Xcode to support its Pocketshpinx library, and you will need that installed before you can use this project._
+_This project uses Xcode to support its PocketShpinx library, and you will need that installed before you can use this project._
 
 # To initialize the entire project:
 ```console
