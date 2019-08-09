@@ -7,6 +7,7 @@
         $.ajax({
           url: "/command",
           method: "GET",
+          cache: false,
           success: function (data)
           {
             stringParse(data);
@@ -17,7 +18,6 @@
               var command = com_array[0];
               function dispatchComm(comm, content)
               {
-                console.log(content);
                 if (comm == "alarm")
                 {
                   let state = stateCheck("alarm.js");
@@ -46,7 +46,7 @@
                   "7.) Turn off light"+ '<br>' +
                   "8.) List commands" + '<br>' + '</li>');
                   var voice_synth = window.speechSynthesis;
-                  var voice_speech = new SpeechSynthesisUtterance("Here is the list of available commands for use");
+                  var voice_speech = new SpeechSynthesisUtterance("Here is the list of available commands");
                   voice_speech.lang = 'en-US';
                   voice_synth.speak(voice_speech);
                 }
